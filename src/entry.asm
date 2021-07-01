@@ -10,7 +10,7 @@ startRom:
     ld   sp, $E000
     call globalsInit ; init C globals
     call _main
-    db   $DD ; lock up if main returns
+    db   $DD ; lock up if main returns ($DD is an invalid opcode)
 
 
 SECTION FRAGMENT "GSINIT", ROMX, BANK[1]

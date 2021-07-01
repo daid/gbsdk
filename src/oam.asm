@@ -9,6 +9,7 @@ wShadowOAM::
 SECTION "gbsdk_oam_init_function", ROMX, BANK[1]
 oamInit::
 _oam_init::
+    push bc
     ld   hl, wShadowOAM
     xor  a
     ld   c, wShadowOAM.end - wShadowOAM
@@ -25,6 +26,7 @@ _oam_init::
     dec  c
     jr   nz, :-
 
+    pop  bc
     ; We directly copy to clear the initial OAM memory, which else contains garbage.
     jp   hOAMCopyRoutine
 
