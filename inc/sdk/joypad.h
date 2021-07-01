@@ -3,14 +3,14 @@
 
 #include <stdint.h>
 
-#define PADF_DOWN   0x80
-#define PADF_UP     0x40
-#define PADF_LEFT   0x20
-#define PADF_RIGHT  0x10
-#define PADF_START  0x08
-#define PADF_SELECT 0x04
-#define PADF_B      0x02
-#define PADF_A      0x01
+#define PAD_DOWN   0x80
+#define PAD_UP     0x40
+#define PAD_LEFT   0x20
+#define PAD_RIGHT  0x10
+#define PAD_START  0x08
+#define PAD_SELECT 0x04
+#define PAD_B      0x02
+#define PAD_A      0x01
 
 extern uint8_t joypad_state;
 extern uint8_t joypad_pressed;
