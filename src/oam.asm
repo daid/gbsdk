@@ -1,4 +1,4 @@
-include "hardware.inc"
+include "sdk/hardware.inc"
 
 SECTION "gbsdk_oam_memory", WRAM0, ALIGN[8]
 _shadow_oam:: ; OAM Memory is for 40 sprites with 4 bytes per sprite

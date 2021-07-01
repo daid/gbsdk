@@ -1,4 +1,4 @@
-include "hardware.inc"
+include "sdk/hardware.inc"
 
 SECTION "gbsdk_vram_functions", ROM0
 _vram_memcpy::

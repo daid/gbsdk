@@ -11,8 +11,6 @@ endif
 
 SRC       := $(shell find src/ -type f -name '*.c') $(shell find $(MYDIR)/src/ -type f -name '*.c')
 ASM       := $(shell find src/ -type f -name '*.asm') $(shell find $(MYDIR)/src/ -type f -name '*.asm')
-PNGS      := $(shell find assets/ -type f -name '*.png')
-PNGS1     := $(shell find assets/ -type f -name '*.1bpp.png')
 
 # Which files do we use from the sdcc libc
 LIBC    := _memset.c gbz80/memcpy.s
@@ -87,7 +85,7 @@ $(BUILD)/assets/%.oam.2bpp: assets/%.oam.png
 	@mkdir -p $(dir $@)
 	$(Q)rgbgfx -h $< -o $@
 
-$(BUILD)/assets/%.1bpp: assets/%.1bpp.png
+$(BUILD)/assets/%.1bpp: assets/%.png
 	@echo Converting $<
 	@mkdir -p $(dir $@)
 	$(Q)rgbgfx -d 1 $< -o $@
