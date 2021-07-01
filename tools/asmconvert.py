@@ -114,6 +114,9 @@ def processParameter():
         sys.stdout.write("[")
         processExpression()
         t = tok.pop()
+        while not t.isA('OP', ')'):
+            sys.stdout.write(t.value)
+            t = tok.pop()
         assert t.isA('OP', ')'), t
         sys.stdout.write("]")
     else:
@@ -167,6 +170,12 @@ while tok:
                 tok.pop()
                 processParameter()
             sys.stdout.write("\n")
+        elif start.value == '.incbin':
+            sys.stdout.write("incbin ")
+            while not tok.peek().isA('NEWLINE'):
+                sys.stdout.write(tok.pop().value)
+            sys.stdout.write("\n")
+            tok.pop()
         else:
             raise Exception(start, tok.peek())
     elif start.isA('ID'):

@@ -1,5 +1,5 @@
-#ifndef HARDWARE_H
-#define HARDWARE_H
+#ifndef GBSDK_HARDWARE_H
+#define GBSDK_HARDWARE_H
 
 // Register for reading joy pad info. (R/W)
 static volatile __sfr __at(0x00) rP1;
@@ -636,7 +636,7 @@ static volatile __sfr __at(0xFF) rIE;
 #define AUDHIGH_LENGTH_ON 0b01000000
 #define AUDHIGH_LENGTH_OFF 0b00000000
 
-#define HALT() __asm__("halt\nnop")
+#define HALT() __asm__("halt")
 #define DISABLE_INTERRUPTS() __asm__("di")
 #define ENABLE_INTERRUPTS() __asm__("ei")
 

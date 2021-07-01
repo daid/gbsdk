@@ -24,12 +24,10 @@ Q ?= @
 BUILD    := _build
 TOOLS    := $(MYDIR)/tools
 OBJS     := $(patsubst %, $(BUILD)/%.o, $(ASM) $(SRC)) $(patsubst %, $(BUILD)/libc/%.o, $(LIBC)) $(BUILD)/gsinit.end.o
-GFXS     := $(patsubst assets/%.png, $(BUILD)/assets/%.2bpp, $(PNGS)) $(patsubst assets/%.1bpp.png, $(BUILD)/assets/%.1bpp, $(PNGS1))
-ASSETS   := $(GFXS)
 
-CFLAGS := -mgbz80 -Isrc/ -I$(MYDIR)/inc
-ASFLAGS := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
-LDFLAGS := -p 0xFF --dmg
+CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc
+ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
+LDFLAGS  := -p 0xFF --dmg
 FIXFLAGS := -v -p 0xFF -t $(NAME) -m $(MBC)
 
 
@@ -53,16 +51,25 @@ $(BUILD)/libc/%.s.asm: $(LIBC_PATH)/%.s $(TOOLS)/asmconvert.py
 	@mkdir -p $(dir $@)
 	$(Q)python3 $(TOOLS)/asmconvert.py $(notdir $<) < $< > $@
 
-$(BUILD)/%.o: $(BUILD)/%.asm
+$(BUILD)/%.d: $(BUILD)/%.asm
+	@mkdir -p $(dir $@)
+	$(Q)rgbasm $(ASFLAGS) $< -M $@ -MT $(@:.d=.o) -MT $@ -MG
+-include $(patsubst %.asm, $(BUILD)/%.asm.d, $(ASM))
+
+$(BUILD)/%.o: $(BUILD)/%.asm $(BUILD)/%.d
 	@echo Assembling $<
 	@mkdir -p $(dir $@)
 	$(Q)rgbasm $(ASFLAGS) $< -o $@
 
-$(BUILD)/%.asm.o: %.asm
+$(BUILD)/%.asm.d: %.asm
+	@mkdir -p $(dir $@)
+	$(Q)rgbasm $(ASFLAGS) $< -M $@ -MT $(@:.d=.o) -MT $@ -MG
+-include $(patsubst %.asm, $(BUILD)/%.asm.d, $(ASM))
+
+$(BUILD)/%.asm.o: %.asm $(BUILD)/%.asm.d
 	@echo Assembling $<
 	@mkdir -p $(dir $@)
-	$(Q)rgbasm $(ASFLAGS) $< -o $@ -M $(@:.o=.d)
--include $(patsubst %.asm, $(BUILD)/%.asm.d, $(ASM))
+	$(Q)rgbasm $(ASFLAGS) $< -o $@
 
 $(PROJECT_NAME).gb: $(OBJS)
 	@echo Linking $@
