@@ -31,11 +31,12 @@ FIXFLAGS := -v -p 0xFF -t $(NAME) -m $(MBC)
 
 all: $(PROJECT_NAME).gb
 
-$(BUILD)/%.c.as: %.c Makefile
+# Rules to make c files
+$(BUILD)/%.c.as: %.c
 	@echo Compiling $<
 	@mkdir -p $(dir $@)
-	$(Q)sdcc $(CFLAGS) -S $< -o $@ -Wp "-MQ $@ -MD $(@:.as=.d)"
--include $(patsubst %.c, $(BUILD)/%.c.d, $(SRC))
+	$(Q)sdcc $(CFLAGS) -S $< -o $@ -Wp "-MQ $@ -MD $(@:.as=.as.d)"
+-include $(patsubst %.c, $(BUILD)/%.c.as.d, $(SRC))
 
 $(BUILD)/libc/%.c.as: $(LIBC_PATH)/%.c
 	@echo Compiling $<
@@ -45,36 +46,45 @@ $(BUILD)/libc/%.c.as: $(LIBC_PATH)/%.c
 $(BUILD)/%.c.asm: $(BUILD)/%.c.as $(TOOLS)/asmconvert.py
 	$(Q)python3 $(TOOLS)/asmconvert.py $(notdir $<) < $< > $@
 
+$(BUILD)/%.c.asm.d: $(BUILD)/%.c.asm
+	@mkdir -p $(dir $@)
+	$(Q)rgbasm $(ASFLAGS) $< -M $@ -MT $(@:.asm.d=.o) -MT $@ -MG
+-include $(patsubst %.c, $(BUILD)/%.c.asm.d, $(SRC))
+
+$(BUILD)/%.c.o: $(BUILD)/%.c.asm $(BUILD)/%.c.asm.d
+	@echo "Assembling (c)" $<
+	@mkdir -p $(dir $@)
+	$(Q)rgbasm $(ASFLAGS) $< -o $@
+
+# Rules to build libc asm files
 $(BUILD)/libc/%.s.asm: $(LIBC_PATH)/%.s $(TOOLS)/asmconvert.py
 	@mkdir -p $(dir $@)
 	$(Q)python3 $(TOOLS)/asmconvert.py $(notdir $<) < $< > $@
 
-$(BUILD)/%.d: $(BUILD)/%.asm
-	@mkdir -p $(dir $@)
-	$(Q)rgbasm $(ASFLAGS) $< -M $@ -MT $(@:.d=.o) -MT $@ -MG
--include $(patsubst %.asm, $(BUILD)/%.asm.d, $(ASM))
-
-$(BUILD)/%.o: $(BUILD)/%.asm $(BUILD)/%.d
+$(BUILD)/libc/%.s.o: $(BUILD)/libc/%.s.asm
 	@echo Assembling $<
 	@mkdir -p $(dir $@)
 	$(Q)rgbasm $(ASFLAGS) $< -o $@
 
+# Rules to build project asm files
 $(BUILD)/%.asm.d: %.asm
 	@mkdir -p $(dir $@)
 	$(Q)rgbasm $(ASFLAGS) $< -M $@ -MT $(@:.d=.o) -MT $@ -MG
--include $(patsubst %.asm, $(BUILD)/%.asm.d, $(ASM))
 
 $(BUILD)/%.asm.o: %.asm $(BUILD)/%.asm.d
 	@echo Assembling $<
 	@mkdir -p $(dir $@)
 	$(Q)rgbasm $(ASFLAGS) $< -o $@
+-include $(patsubst %.asm, $(BUILD)/%.asm.d, $(ASM))
 
-$(PROJECT_NAME).gb: $(OBJS)
+# Rule to build the final rom
+$(PROJECT_NAME).gb $(PROJECT_NAME).map $(PROJECT_NAME).sym: $(OBJS)
 	@echo Linking $@
 	$(Q)rgblink $(LDFLAGS) $^ -o $@ -m $(basename $@).map -n $(basename $@).sym
 	$(Q)rgbfix $(FIXFLAGS) $@
 	@python3 $(TOOLS)/romspace.py $(basename $@).map
 
+# Asset related rules
 $(BUILD)/assets/%.2bpp: assets/%.png
 	@echo Converting $<
 	@mkdir -p $(dir $@)
@@ -90,9 +100,10 @@ $(BUILD)/assets/%.1bpp: assets/%.png
 	@mkdir -p $(dir $@)
 	$(Q)rgbgfx -d 1 $< -o $@
 
-$(BUILD)/gsinit.end.asm:
-    # Special hack to place a ret instruction at the end of the GSINIT section.
-	@echo 'SECTION FRAGMENT "GSINIT", ROMX, BANK[1]\n  ret' > $@
+# Special hack to place a ret instruction at the end of the GSINIT section.
+# This has to be linked last, as that ensures that this fragment is at the end of the "GSINIT" section.
+$(BUILD)/gsinit.end.o:
+	@echo 'SECTION FRAGMENT "GSINIT", ROMX, BANK[1]\n  ret' | rgbasm - -o $@
 
 clean:
 	@rm -rf $(BUILD) $(PROJECT_NAME).gb
