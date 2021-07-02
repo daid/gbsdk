@@ -8,9 +8,9 @@ _vram_memcpy::
     ld   a, [hl-]
     ld   e, a
     or   a, d
-    jr   Z, .skip
-
+    ret  z
     ; size -> de
+
     push bc
      ld   a, [hl-]
      ld   b, a
@@ -19,9 +19,9 @@ _vram_memcpy::
      ld   a, [hl-]
      ld   l, [hl]
      ld   h, a
+     ; src -> bc, dst -> hl, size -> de
      inc  d
      inc  e
-     ; src -> bc, dst -> hl, size -> de
      jr   .start
 
 .copy_loop:
@@ -32,15 +32,45 @@ _vram_memcpy::
      ld   [hl+], a
      inc  bc
 .start:
-     dec e
-     jr nz, .copy_loop
-     dec d
-     jr nz, .copy_loop
+     dec  e
+     jr   nz, .copy_loop
+     dec  d
+     jr   nz, .copy_loop
 
     pop bc
-.skip:
-    ld   hl, sp + 2
-    ld   e, [hl]
-    inc  hl
-    ld   d, [hl]
+    ret
+
+_vram_memset::
+    ld   hl, sp + 6
+    ld   a, [hl-]
+    ld   d, a
+    ld   a, [hl-]
+    ld   e, a
+    or   a, d
+    ret  z
+    ; size -> de
+    push bc
+     ld   a, [hl-]
+     ld   c, a
+     ld   a, [hl-]
+     ld   l, [hl]
+     ld   h, a
+     ; value -> c, dst -> hl, size -> de
+     inc  d
+     inc  e
+     jr   .start
+
+.copy_loop:
+     ldh  a, [rSTAT]
+     and  a, STATF_BUSY
+     jr   nz, .copy_loop
+     ld   a, c
+     ld   [hl+], a
+.start:
+     dec  e
+     jr   nz, .copy_loop
+     dec  d
+     jr   nz, .copy_loop
+
+    pop bc
     ret

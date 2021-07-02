@@ -4,16 +4,16 @@
 // Register for reading joy pad info. (R/W)
 static volatile __sfr __at(0x00) rP1;
 
-#define P1F_5 0b00100000 // P15 out port, set to 0 to get buttons
-#define P1F_4 0b00010000 // P14 out port, set to 0 to get dpad
-#define P1F_3 0b00001000 // P13 in port
-#define P1F_2 0b00000100 // P12 in port
-#define P1F_1 0b00000010 // P11 in port
-#define P1F_0 0b00000001 // P10 in port
+#define P1_5 0b00100000 // P15 out port, set to 0 to get buttons
+#define P1_4 0b00010000 // P14 out port, set to 0 to get dpad
+#define P1_3 0b00001000 // P13 in port
+#define P1_2 0b00000100 // P12 in port
+#define P1_1 0b00000010 // P11 in port
+#define P1_0 0b00000001 // P10 in port
 
-#define P1F_GET_DPAD P1F_5
-#define P1F_GET_BTN  P1F_4
-#define P1F_GET_NONE (P1F_4 | P1F_5)
+#define P1_GET_DPAD P1_5
+#define P1_GET_BTN  P1_4
+#define P1_GET_NONE (P1_4 | P1_5)
 
 
 // Serial Transfer Data (R/W)
@@ -34,12 +34,12 @@ static volatile __sfr __at(0x06) rTMA;
 // Timer control (R/W)
 static volatile __sfr __at(0x07) rTAC;
 
-#define TACF_START 0b00000100
-#define TACF_STOP 0b00000000
-#define TACF_4KHZ 0b00000000
-#define TACF_16KHZ 0b00000011
-#define TACF_65KHZ 0b00000010
-#define TACF_262KHZ 0b00000001
+#define TAC_START 0b00000100
+#define TAC_STOP 0b00000000
+#define TAC_4KHZ 0b00000000
+#define TAC_16KHZ 0b00000011
+#define TAC_65KHZ 0b00000010
+#define TAC_262KHZ 0b00000001
 
 
 // Interrupt Flag (R/W)
@@ -316,22 +316,22 @@ static volatile __sfr __at(0x26) rNR52;
 //
 static volatile __sfr __at(0x40) rLCDC;
 
-#define LCDCF_OFF 0b00000000 // LCD Control Operation
-#define LCDCF_ON 0b10000000 // LCD Control Operation
-#define LCDCF_WIN9800 0b00000000 // Window Tile Map Display Select
-#define LCDCF_WIN9C00 0b01000000 // Window Tile Map Display Select
-#define LCDCF_WINOFF 0b00000000 // Window Display
-#define LCDCF_WINON 0b00100000 // Window Display
-#define LCDCF_BG8800 0b00000000 // BG & Window Tile Data Select
-#define LCDCF_BG8000 0b00010000 // BG & Window Tile Data Select
-#define LCDCF_BG9800 0b00000000 // BG Tile Map Display Select
-#define LCDCF_BG9C00 0b00001000 // BG Tile Map Display Select
-#define LCDCF_OBJ8 0b00000000 // OBJ Construction
-#define LCDCF_OBJ16 0b00000100 // OBJ Construction
-#define LCDCF_OBJOFF 0b00000000 // OBJ Display
-#define LCDCF_OBJON 0b00000010 // OBJ Display
-#define LCDCF_BGOFF 0b00000000 // BG Display
-#define LCDCF_BGON 0b00000001 // BG Display
+#define LCDC_OFF 0b00000000 // LCD Control Operation
+#define LCDC_ON 0b10000000 // LCD Control Operation
+#define LCDC_WIN9800 0b00000000 // Window Tile Map Display Select
+#define LCDC_WIN9C00 0b01000000 // Window Tile Map Display Select
+#define LCDC_WINOFF 0b00000000 // Window Display
+#define LCDC_WINON 0b00100000 // Window Display
+#define LCDC_BG8800 0b00000000 // BG & Window Tile Data Select
+#define LCDC_BG8000 0b00010000 // BG & Window Tile Data Select
+#define LCDC_BG9800 0b00000000 // BG Tile Map Display Select
+#define LCDC_BG9C00 0b00001000 // BG Tile Map Display Select
+#define LCDC_OBJ8 0b00000000 // OBJ Construction
+#define LCDC_OBJ16 0b00000100 // OBJ Construction
+#define LCDC_OBJOFF 0b00000000 // OBJ Display
+#define LCDC_OBJON 0b00000010 // OBJ Display
+#define LCDC_BGOFF 0b00000000 // BG Display
+#define LCDC_BGON 0b00000001 // BG Display
 // "Window Character Data Select" follows BG
 
 
@@ -341,16 +341,16 @@ static volatile __sfr __at(0x40) rLCDC;
 //
 static volatile __sfr __at(0x41) rSTAT;
 
-#define STATF_LYC 0b01000000 // LYC=LY Coincidence (Selectable)
-#define STATF_MODE10 0b00100000 // Mode 10
-#define STATF_MODE01 0b00010000 // Mode 01 (V-Blank)
-#define STATF_MODE00 0b00001000 // Mode 00 (H-Blank)
-#define STATF_LYCF 0b00000100 // Coincidence Flag
-#define STATF_HBL 0b00000000 // H-Blank
-#define STATF_VBL 0b00000001 // V-Blank
-#define STATF_OAM 0b00000010 // OAM-RAM is used by system
-#define STATF_LCD 0b00000011 // Both OAM and VRAM used by system
-#define STATF_BUSY 0b00000010 // When set, VRAM access is unsafe
+#define STAT_LYC 0b01000000 // LYC=LY Coincidence (Selectable)
+#define STAT_MODE10 0b00100000 // Mode 10
+#define STAT_MODE01 0b00010000 // Mode 01 (V-Blank)
+#define STAT_MODE00 0b00001000 // Mode 00 (H-Blank)
+#define STAT_LYCF 0b00000100 // Coincidence Flag
+#define STAT_HBL 0b00000000 // H-Blank
+#define STAT_VBL 0b00000001 // V-Blank
+#define STAT_OAM 0b00000010 // OAM-RAM is used by system
+#define STAT_LCD 0b00000011 // Both OAM and VRAM used by system
+#define STAT_BUSY 0b00000010 // When set, VRAM access is unsafe
 
 
 //
@@ -450,8 +450,8 @@ static volatile __sfr __at(0x4B) rWX;
 static volatile __sfr __at(0x4D) rKEY1;
 #define rSPD  rKEY1
 
-#define KEY1F_DBLSPEED 0b10000000 // 0=Normal Speed, 1=Double Speed (R)
-#define KEY1F_PREPARE 0b00000001 // 0=No, 1=Prepare (R/W)
+#define KEY1_DBLSPEED 0b10000000 // 0=Normal Speed, 1=Double Speed (R)
+#define KEY1_PREPARE 0b00000001 // 0=No, 1=Prepare (R/W)
 
 
 //
@@ -502,11 +502,11 @@ static volatile __sfr __at(0x54) rHDMA4;
 //
 static volatile __sfr __at(0x55) rHDMA5;
 
-#define HDMA5F_MODE_GP 0b00000000 // General Purpose DMA (W)
-#define HDMA5F_MODE_HBL 0b10000000 // HBlank DMA (W)
+#define HDMA5_MODE_GP 0b00000000 // General Purpose DMA (W)
+#define HDMA5_MODE_HBL 0b10000000 // HBlank DMA (W)
 
 // Once DMA has started, use HDMA5F_BUSY to check when the transfer is complete
-#define HDMA5F_BUSY 0b10000000 // 0=Busy (DMA still in progress), 1=Transfer complete (R)
+#define HDMA5_BUSY 0b10000000 // 0=Busy (DMA still in progress), 1=Transfer complete (R)
 
 
 //
@@ -516,10 +516,10 @@ static volatile __sfr __at(0x55) rHDMA5;
 //
 static volatile __sfr __at(0x56) rRP;
 
-#define RPF_ENREAD 0b11000000
-#define RPF_DATAIN 0b00000010 // 0=Receiving IR Signal, 1=Normal
-#define RPF_WRITE_HI 0b00000001
-#define RPF_WRITE_LO 0b00000000
+#define RP_ENREAD 0b11000000
+#define RP_DATAIN 0b00000010 // 0=Receiving IR Signal, 1=Normal
+#define RP_WRITE_HI 0b00000001
+#define RP_WRITE_LO 0b00000000
 
 
 //
@@ -528,7 +528,7 @@ static volatile __sfr __at(0x56) rRP;
 //
 static volatile __sfr __at(0x68) rBCPS;
 
-#define BCPSF_AUTOINC 0b10000000 // Auto Increment (0=Disabled, 1=Increment after Writing)
+#define BCPS_AUTOINC 0b10000000 // Auto Increment (0=Disabled, 1=Increment after Writing)
 
 
 //
@@ -544,7 +544,7 @@ static volatile __sfr __at(0x69) rBCPD;
 //
 static volatile __sfr __at(0x6A) rOCPS;
 
-#define OCPSF_AUTOINC 0b10000000 // Auto Increment (0=Disabled, 1=Increment after Writing)
+#define OCPS_AUTOINC 0b10000000 // Auto Increment (0=Disabled, 1=Increment after Writing)
 
 
 //
@@ -590,11 +590,11 @@ static volatile __sfr __at(0x77) rPCM34;
 //
 static volatile __sfr __at(0xFF) rIE;
 
-#define IEF_HILO 0b00010000 // Transition from High to Low of Pin number P10-P13
-#define IEF_SERIAL 0b00001000 // Serial I/O transfer end
-#define IEF_TIMER 0b00000100 // Timer Overflow
-#define IEF_LCDC 0b00000010 // LCDC (see STAT)
-#define IEF_VBLANK 0b00000001 // V-Blank
+#define IE_HILO 0b00010000 // Transition from High to Low of Pin number P10-P13
+#define IE_SERIAL 0b00001000 // Serial I/O transfer end
+#define IE_TIMER 0b00000100 // Timer Overflow
+#define IE_LCDC 0b00000010 // LCDC (see STAT)
+#define IE_VBLANK 0b00000001 // V-Blank
 
 
 /***************************************************************************
