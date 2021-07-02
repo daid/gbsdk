@@ -170,6 +170,14 @@ while tok:
                 tok.pop()
                 processParameter()
             sys.stdout.write("\n")
+        elif start.value == '.dw':
+            sys.stdout.write("dw ")
+            processParameter()
+            while tok.peek().isA('OP', ','):
+                sys.stdout.write(",")
+                tok.pop()
+                processParameter()
+            sys.stdout.write("\n")
         elif start.value == '.incbin':
             sys.stdout.write("incbin ")
             while not tok.peek().isA('NEWLINE'):

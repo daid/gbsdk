@@ -394,7 +394,6 @@ static volatile __sfr __at(0x56) rRP;
 // BCPS ($FF68)
 // Background Color Palette Specification (R/W)
 static volatile __sfr __at(0x68) rBCPS;
-
 #define BCPS_AUTOINC 0b10000000 // Auto Increment (0=Disabled, 1=Increment after Writing)
 
 // BCPD ($FF69)
@@ -404,7 +403,6 @@ static volatile __sfr __at(0x69) rBCPD;
 // OCPS ($FF6A)
 // Object Color Palette Specification (R/W)
 static volatile __sfr __at(0x6A) rOCPS;
-
 #define OCPS_AUTOINC 0b10000000 // Auto Increment (0=Disabled, 1=Increment after Writing)
 
 // OCPD ($FF6B)
