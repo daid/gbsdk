@@ -12,7 +12,7 @@ This project has a few goals:
 
 * Thin/no abstractions. GBDK-2020 is an oddball of low level functions, badly named functions and high level functions with horrible performance and side effects.
 * Mixing of C code with ASM code, without subjecting yourself to the asxxxx syntax.
-* A better linker. By using the rgbds linker instead of the SDCC linker (used by GBDK-2020) we get various features that where otherwise impossible.
+* A different linker. By using the rgbds linker instead of the SDCC linker, a bunch of features that exernal tools provide on gbdk-2020 are standard.
 
 # Usage
 
