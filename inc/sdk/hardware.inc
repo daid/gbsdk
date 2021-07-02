@@ -22,13 +22,13 @@
 ;* Rev 2.5 - 03-May-15 : Fixed format (AntonioND)
 ;* Rev 2.6 - 09-Apr-16 : Added GBC OAM and cart defines (AntonioND)
 ;* Rev 2.7 - 19-Jan-19 : Added rPCMXX (ISSOtm)
-;* Rev 2.8 - 03-Feb-19 : Added audio registers flags (Álvaro Cuesta)
+;* Rev 2.8 - 03-Feb-19 : Added audio registers flags (ï¿½lvaro Cuesta)
 ;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
 ;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 
 ; If all of these are already defined, don't do it again.
 
-    IF !DEF(HARDWARE_INC)
+IF !DEF(HARDWARE_INC)
 HARDWARE_INC SET 1
 
 rev_Check_hardware_inc : MACRO

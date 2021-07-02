@@ -3,10 +3,16 @@
 MYDIR     := $(dir $(lastword $(MAKEFILE_LIST)))
 
 ifndef PROJECT_NAME
-$(error PROJECT_NAME is not set)
+$(error PROJECT_NAME is not set to the name of your rom.)
 endif
 ifndef MBC
-$(error MBC is not set.)
+$(error MBC is not set. Should be set to the MBC name or value you want. Example "MBC5+RAM+BATTERY")
+endif
+ifndef TARGETS
+$(error TARGETS is not set. Should be a combination of DMG SGB CGB)
+endif
+ifneq ($(filter-out DMG SGB CGB,$(TARGETS)),)
+$(error TARGETS should be a combination of DMG SGB CGB, unknown: $(filter-out DMG SGB CGB,$(TARGETS)))
 endif
 
 SRC       := $(shell find src/ -type f -name '*.c') $(shell find $(MYDIR)/src/ -type f -name '*.c')
@@ -25,8 +31,30 @@ OBJS     := $(patsubst %, $(BUILD)/%.o, $(ASM) $(SRC)) $(patsubst %, $(BUILD)/li
 
 CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc
 ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
-LDFLAGS  := -p 0xFF --dmg
-FIXFLAGS := -v -p 0xFF -t $(NAME) -m $(MBC)
+LDFLAGS  := --pad 0xFF
+FIXFLAGS := --validate --pad-value 0xFF --title $(NAME) --mbc-type $(MBC)
+
+ifeq ($(filter CGB,$(TARGETS)),) # Not targeting CGB, so disable CGB features
+	CFLAGS  += -DCGB=0
+	ASFLAGS += -DCGB=0
+	LDFLAGS += --dmg
+else
+	CFLAGS  += -DCGB=1
+	ASFLAGS += -DCGB=1
+	ifeq ($(filter DMG,$(TARGETS))$(filter SGB,$(TARGETS)),) # Check if not targeting both CGB and DMG
+		FIXFLAGS += --color-only
+	else
+		FIXFLAGS += --color-compatible
+	endif
+endif
+ifeq ($(filter SGB,$(TARGETS)),) # Not targeting CGB, so disable CGB features
+	CFLAGS  += -DSGB=0
+	ASFLAGS += -DSGB=0
+else # Targeting SGB as well
+	CFLAGS  += -DSGB=1
+	ASFLAGS += -DSGB=1
+	FIXFLAGS += --sgb-compatible
+endif
 
 
 all: $(PROJECT_NAME).gb
