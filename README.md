@@ -22,3 +22,5 @@ To use this, you need to have installed:
 * rgbds (version 0.5.1)
 * python (version 3.6 or newer)
 * A strong will, and a bit of crazy.
+
+See https://github.com/daid/gbsdk-template for a ready to use template of a project setup.
