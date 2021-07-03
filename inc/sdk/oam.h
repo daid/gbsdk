@@ -23,7 +23,7 @@ struct oam_entry {
 };
 extern struct oam_entry shadow_oam[40];
 
-void oam_init();
-void oam_dma_copy();
+void oam_init() __preserves_regs(b);
+void oam_dma_copy() __preserves_regs(b, c, d, e, h, l);
 
 #endif//GBSDK_OAM_H
