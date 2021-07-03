@@ -1,6 +1,14 @@
 include "sdk/hardware.inc"
 
 SECTION "gbsdk_vram_functions", ROM0
+_lcd_off::
+:   ldh  a, [rLY]
+    cp   144
+    jr   c, :-
+    xor  a
+    ldh  [rLCDC], a
+    ret
+
 _vram_memcpy::
     ld   hl, sp + 7
     ld   a, [hl-]

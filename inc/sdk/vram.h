@@ -4,10 +4,12 @@
 #include <stdint.h>
 #include <sdk/hardware.h>
 
-//Copy to VRAM with STAT checks.
+//Turn off the LCD, with the proper checks that this happens during VBLANK
+void lcd_off();
+
+//Copy to VRAM with STAT checks, so these function are safe to write to VRAM at any time.
 void vram_memcpy(uint16_t dst, void* src, uint16_t size);
 void vram_memset(uint16_t dst, uint8_t value, uint16_t size);
-
 inline void vram_set(uint16_t dst, uint8_t value) {
     while(rSTAT & STAT_BUSY) {}
     *((uint8_t*)dst) = value;
