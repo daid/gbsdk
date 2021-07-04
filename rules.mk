@@ -36,7 +36,7 @@ OBJS     := $(patsubst %, $(BUILD)/%.o, $(ASM) $(SRC)) $(patsubst %, $(BUILD)/li
 CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc
 ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
 LDFLAGS  := --pad 0xFF
-FIXFLAGS := --validate --pad-value 0xFF --title $(TITLE) --mbc-type $(MBC) -l 0x33
+FIXFLAGS := --validate --pad-value 0xFF --title "$(PROJECT_NAME)" --mbc-type "$(MBC)" -l 0x33
 
 ifeq ($(filter CGB,$(TARGETS)),) # Not targeting CGB, so disable CGB features
 	CFLAGS  += -DCGB=0
@@ -82,7 +82,7 @@ $(BUILD)/%.c.asm.d: $(BUILD)/%.c.asm
 	@mkdir -p $(dir $@)
 	$(Q)rgbasm $(ASFLAGS) $< -M $@ -MT $(@:.asm.d=.o) -MT $@ -MG
 #	rgbds dependency generation is broken, as it stops after the first missing file. so list all incbins always
-	$(Q)cat $< | grep -i ^INCBIN | sed -E 's/incbin "([^"]*)"/$(subst /,\/,$(@:.asm.d=.o)): \1/gI' >> $@
+	$(Q)cat $< | grep -i '^ *INCBIN' | sed -E 's/ *incbin *"([^"]*)"/$(subst /,\/,$(@:.asm.d=.o)): \1/gI' >> $@
 -include $(patsubst %.c, $(BUILD)/%.c.asm.d, $(SRC))
 
 $(BUILD)/%.c.o: $(BUILD)/%.c.asm $(BUILD)/%.c.asm.d
@@ -105,7 +105,7 @@ $(BUILD)/%.asm.d: %.asm
 	@mkdir -p $(dir $@)
 	$(Q)rgbasm $(ASFLAGS) $< -M $@ -MT $(@:.d=.o) -MT $@ -MG
 #	rgbds dependency generation is broken, as it stops after the first missing file. so list all incbins always
-	$(Q)cat $< | grep -i ^INCBIN | sed -E 's/incbin "([^"]*)"/$(subst /,\/,$(@:.d=.o)): \1/gI' >> $@
+	$(Q)cat $< | grep -i '^ *INCBIN' | sed -E 's/incbin "([^"]*)"/$(subst /,\/,$(@:.d=.o)): \1/gI' >> $@
 
 $(BUILD)/%.asm.o: %.asm $(BUILD)/%.asm.d
 	@echo Assembling $<
