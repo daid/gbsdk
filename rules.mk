@@ -36,7 +36,7 @@ OBJS     := $(patsubst %, $(BUILD)/%.o, $(ASM) $(SRC)) $(patsubst %, $(BUILD)/li
 CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc
 ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
 LDFLAGS  := --pad 0xFF
-FIXFLAGS := --validate --pad-value 0xFF --title $(NAME) --mbc-type $(MBC) -l 0x33
+FIXFLAGS := --validate --pad-value 0xFF --title $(TITLE) --mbc-type $(MBC) -l 0x33
 
 ifeq ($(filter CGB,$(TARGETS)),) # Not targeting CGB, so disable CGB features
 	CFLAGS  += -DCGB=0
