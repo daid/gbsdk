@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-extern __sfr currentBank;
+extern __sfr current_bank;
 #define SET_BANK(bank_nr) { \
-        currentBank = bank_nr; \
+        current_bank = bank_nr; \
         *((uint8_t*)0x2000) = bank_nr; \
     }
 
