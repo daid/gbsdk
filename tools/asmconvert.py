@@ -142,6 +142,8 @@ while tok:
                 print('SECTION FRAGMENT "%s_%s", ROM0' % (module, area_name))
             elif area_name == "_CODE":
                 print('SECTION FRAGMENT "%s_%s", ROM0' % (module, area_name))
+            elif area_name.startswith("_CODE_"):
+                print('SECTION FRAGMENT "%s_%s", ROMX, BANK[%d]' % (module, area_name, int(area_name[6:])))
             elif area_name == "_CABS":
                 print('SECTION FRAGMENT "%s_%s", ROM0' % (module, area_name))
             elif area_name == "_GSINIT":
