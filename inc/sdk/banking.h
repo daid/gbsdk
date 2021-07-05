@@ -4,9 +4,10 @@
 #include <stdint.h>
 
 extern __sfr current_bank;
-#define SET_BANK(bank_nr) { \
-        current_bank = bank_nr; \
-        *((uint8_t*)0x2000) = bank_nr; \
-    }
+
+inline void switch_bank(bank_nr) {
+    current_bank = bank_nr;
+    *((uint8_t*)0x2000) = bank_nr;
+}
 
 #endif//LIB_BANKING_H
