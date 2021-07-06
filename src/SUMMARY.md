@@ -1,0 +1,18 @@
+# Summary
+
+- [Introduction](./introduction.md)
+  - [Summary]()
+  - [Required reading]()
+- [Setup](./setup.md)
+  - [Installation](./setup/installation.md)
+  - [New project]()
+  - [Project configuration]()
+  - [Building & Running]()
+- [C API]()
+  - [Video]()
+    - [Background]()
+    - [Sprites]()
+    - [Gameboy Color]()
+  - [Joypad]()
+  - [Banking]()
+  - [Super Gameboy]()

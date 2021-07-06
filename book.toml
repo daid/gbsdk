@@ -1,0 +1,10 @@
+[book]
+authors = ["Daid"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Gameboy Software Development Kit"
+
+[output.html]
+default-theme = "ayu"
+preferred-dark-theme = "ayu"
