@@ -82,3 +82,35 @@ _vram_memset::
 
     pop bc
     ret
+
+IF CGB
+
+_cgb_background_palette::
+    pop  de
+    pop  hl
+    push hl
+    push de
+    ld   a, BCPSF_AUTOINC
+    ldh  [rBCPS], a
+    ld   e, 8*4*2
+:   ld   a, [hl+]
+    ldh  [rBCPD], a
+    dec  e
+    jr   nz, :-
+    ret
+
+_cgb_object_palette::
+    pop  de
+    pop  hl
+    push hl
+    push de
+    ld   a, OCPSF_AUTOINC
+    ldh  [rOCPS], a
+    ld   e, 8*4*2
+:   ld   a, [hl+]
+    ldh  [rOCPD], a
+    dec  e
+    jr   nz, :-
+    ret
+
+ENDC
