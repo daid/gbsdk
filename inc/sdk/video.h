@@ -1,18 +1,9 @@
-#ifndef GBSDK_VRAM_H
-#define GBSDK_VRAM_H
+#ifndef GBSDK_VIDEO_H
+#define GBSDK_VIDEO_H
 
 #include <stdint.h>
 #include <sdk/hardware.h>
 
-#if CGB
-//Bits for the background attributes in the 2nd VRAM bank.
-#define BG_PRI     0b10000000
-#define BG_YFLIP   0b01000000
-#define BG_XFLIP   0b00100000
-#define BG_BANK0   0b00000000
-#define BG_BANK1   0b00001000
-#define BG_PALMASK 0b00000111
-#endif
 
 //Turn off the LCD, with the proper checks that this happens during VBLANK
 void lcd_off() __preserves_regs(b, c, d, e, h, l);
@@ -46,4 +37,4 @@ inline void cgb_hdma(uint16_t dst, const void* src, uint8_t count) {
 }
 #endif
 
-#endif//GBSDK_VRAM_H
+#endif//GBSDK_VIDEO_H

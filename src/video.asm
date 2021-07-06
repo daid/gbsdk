@@ -1,6 +1,6 @@
 include "sdk/hardware.inc"
 
-SECTION "gbsdk_vram_functions", ROM0
+SECTION "gbsdk_video_functions", ROM0
 _lcd_off::
 :   ldh  a, [rLY]
     cp   144

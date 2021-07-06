@@ -2,18 +2,8 @@
 #define GBSDK_OAM_H
 
 #include <stdint.h>
-#include "hardware.h"
+#include <sdk/hardware.h>
 
-#define OAM_PRI     0b10000000
-#define OAM_YFLIP   0b01000000
-#define OAM_XFLIP   0b00100000
-#define OAM_PAL0    0b00000000
-#define OAM_PAL1    0b00010000
-#if CGB
-#define OAM_BANK0   0b00000000
-#define OAM_BANK1   0b00001000
-#define OAM_PALMASK 0b00000111
-#endif
 
 struct oam_entry {
     uint8_t y;

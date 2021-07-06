@@ -473,6 +473,18 @@ static volatile __sfr __at(0xFF) rIE;
 #define AUDHIGH_LENGTH_ON 0b01000000
 #define AUDHIGH_LENGTH_OFF 0b00000000
 
+// Shared bits between the OAM attributes and the CGB background attributes.
+#define ATTR_PRI     0b10000000
+#define ATTR_YFLIP   0b01000000
+#define ATTR_XFLIP   0b00100000
+#define ATTR_PAL0    0b00000000
+#define ATTR_PAL1    0b00010000
+#if CGB
+#define ATTR_BANK0   0b00000000
+#define ATTR_BANK1   0b00001000
+#define ATTR_PALMASK 0b00000111
+#endif
+
 
 // Defines for specific instructions
 #define HALT() __asm__("halt")
