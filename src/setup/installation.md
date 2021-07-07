@@ -2,7 +2,11 @@
 
 ## Windows
 
-TODO: Package everything in a nice to install zip file, else it's a big mess for your users.
+Download the latest release package from [gbsdk-winenv](https://github.com/daid/gbsdk-winenv/releases) and extract it somewhere.
+
+Running the `gbsdk-bash.exe` will give you a commandline shell where you can do builds (all required tools are installed in this)
+
+Alternatively, install WSL (if you have Windows 10) and follow the linux setup.
 
 ## Linux
 
@@ -39,4 +43,4 @@ cd ..
 
 ## MacOS
 
-Seriously. No clue, follow Linux installation mostly, I guess.
+Seriously. No clue, follow Linux installation mostly, I guess. Something something `brew` instead of `apt-get`?

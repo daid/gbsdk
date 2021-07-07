@@ -1,11 +1,11 @@
 # Summary
 
-- [Introduction](./introduction.md)
-  - [Summary]()
-  - [Required reading]()
-- [Setup](./setup.md)
-  - [Installation](./setup/installation.md)
-  - [New project]()
+- [Introduction](introduction.md)
+  - [Summary](introduction/summary.md)
+  - [Required reading](introduction/reading.md)
+- [Setup](setup.md)
+  - [Installation](setup/installation.md)
+  - [New project](setup/newproject.md)
   - [Project configuration]()
   - [Building & Running]()
 - [C API]()
