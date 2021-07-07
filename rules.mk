@@ -58,7 +58,9 @@ else # Targeting SGB as well
 	ASFLAGS += -DSGB=1
 	FIXFLAGS += --sgb-compatible
 endif
-
+ifneq ($(findstring RAM,$(MBC)),)
+	FIXFLAGS += --ram-size 2
+endif
 
 all: $(PROJECT_NAME).gb
 
@@ -138,7 +140,7 @@ $(BUILD)/assets/%.1bpp: assets/%.png
 # Special hack to place a ret instruction at the end of the GSINIT section.
 # This has to be linked last, as that ensures that this fragment is at the end of the "GSINIT" section.
 $(BUILD)/gsinit.end.o:
-	@echo -e 'SECTION FRAGMENT "GSINIT", ROMX, BANK[1]\n  ret' | rgbasm - -o $@
+	@/bin/echo -e 'SECTION FRAGMENT "GSINIT", ROMX, BANK[1]\n  ret' | rgbasm - -o $@
 
 clean:
 	@rm -rf $(BUILD) $(PROJECT_NAME).gb

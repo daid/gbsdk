@@ -15,6 +15,6 @@
 extern uint8_t joypad_state;
 extern uint8_t joypad_pressed;
 
-void joypad_update() __preserves_regs(b, c);
+void joypad_update(void) __preserves_regs(b, c);
 
 #endif//GBSDK_JOYPAD_H
