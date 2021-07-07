@@ -25,7 +25,6 @@ LIBC    += _divuint.c _divsint.c _mulint.c _modsint.c _moduint.c
 # the 32 bit functions use 10% of ROM0, so do not include them
 #LIBC    += _divulong.c _divslong.c _mullong.c _modslong.c _modulong.c
 LIBC_PATH := $(shell sdcc -mgbz80 --print-search-dirs | grep gbz80 | tail -n 1)/../src
-LIBC_PATH := /usr/local/share/sdcc/lib/src
 
 Q ?= @
 
