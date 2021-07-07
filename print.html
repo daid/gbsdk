@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="introduction/summary.html"><strong aria-hidden="true">1.1.</strong> Summary</a></li><li class="chapter-item expanded "><a href="introduction/reading.html"><strong aria-hidden="true">1.2.</strong> Required reading</a></li></ol></li><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">2.</strong> Setup</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="setup/newproject.html"><strong aria-hidden="true">2.2.</strong> New project</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.3.</strong> Project configuration</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.4.</strong> Building &amp; Running</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> C API</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.</strong> Video</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.1.</strong> Background</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.2.</strong> Sprites</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.3.</strong> Gameboy Color</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Joypad</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.3.</strong> Banking</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Super Gameboy</div></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="introduction/summary.html"><strong aria-hidden="true">1.1.</strong> Summary</a></li><li class="chapter-item expanded "><a href="introduction/reading.html"><strong aria-hidden="true">1.2.</strong> Additional reading</a></li></ol></li><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">2.</strong> Setup</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="setup/newproject.html"><strong aria-hidden="true">2.2.</strong> New project</a></li><li class="chapter-item expanded "><a href="setup/configuration.html"><strong aria-hidden="true">2.3.</strong> Project configuration</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.4.</strong> Building &amp; Running</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> C API</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.</strong> Video</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.1.</strong> Background</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.2.</strong> Sprites</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.3.</strong> Gameboy Color</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Joypad</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.3.</strong> Banking</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Super Gameboy</div></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -179,24 +179,33 @@ There are many people in there that can help with any kind of problem.</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="summary"><a class="header" href="#summary">Summary</a></h1>
 <p>The goal of GBSDK is as following:</p>
 <p><strong>Provide an environment to allow C and Assembly programming for the Gameboy, with a low amount of abstraction.</strong></p>
+<p>Also note that this targets the following hardware:</p>
+<ul>
+<li>DMG: Origonal gameboy (First version, known as the gray brick)</li>
+<li>SGB: Super Gameboy (Running gameboy games on the Super Nintendo)</li>
+<li>CGB: Gameboy Color (Adds color support and a few more minor features)</li>
+</ul>
+<p><em>Note that the Gameboy Advanced is a very different device. And not part of the targets for GBSDK. The Gameboy Advanced has a Gameboy Compatibility mode, which is essentially a Gameboy Color (CGB).
+But full Gameboy Advanced development information can be found on <a href="https://gbadev.net/">gbadev</a>]</em></p>
 <p>To compare it with two other well known environments:</p>
 <h2 id="a-hrefhttpsgithubcomgbdk-2020gbdk-2020gbdk-2020a"><a class="header" href="#a-hrefhttpsgithubcomgbdk-2020gbdk-2020gbdk-2020a"><a href="https://github.com/gbdk-2020/gbdk-2020">GBDK-2020</a></a></h2>
 <p>GBDK-2020 provides a C programming environment. It hides a few hardware details behind abstractions, and it provides high level functions for some parts, while low level for other parts.
 Which results in people not understanding what the hardware is doing and why things are not working as expected.</p>
 <p>A simple example is <code>printf()</code> which GBDK-2020 provides. It allows writting text to the screen. But, the Gameboy does not have any text output, it has a tile based rendering.
 So this uses a large amount of available graphic tiles to provide this text drawing facility. It makes drawing text easy, but also adds multiple layers of hidden behavior.</p>
+<p>Both GBDK-2020 and GBSK use <a href="http://sdcc.sourceforge.net/">sdcc</a> as a C compiler. So the basic C support is the same, but the libraries and build systems are very different.</p>
 <h2 id="a-hrefhttpsrgbdsgbdeviorgbdsa"><a class="header" href="#a-hrefhttpsrgbdsgbdeviorgbdsa"><a href="https://rgbds.gbdev.io/">rgbds</a></a></h2>
 <p>rgbds is the nr1 used assembler for Gameboy programming. If you want to do assembly for the gameboy, then rgbds is your friend. And GBSDK uses rgbds as well!</p>
 <p>However, stand alone it only provides the assembler and nothing more. No default project setup, no intergration with C, everything else you'll need to do yourself.</p>
 <h2 id="so-gbsdk"><a class="header" href="#so-gbsdk">So, GBSDK</a></h2>
 <p>So, GBSDK stands a bit in the middle between rgbds and GBDK-2020. It does provide the facilities to program in C. But it does not provide high level abstractions, it only provides
-the facilities to access the hardware.</p>
-<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="required-reading"><a class="header" href="#required-reading">Required reading</a></h1>
+the facilities to access the hardware. It also integrates with rgbds as an assembler, instead of using the asxxxx assembler that sdcc uses by default.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="additional-reading"><a class="header" href="#additional-reading">Additional reading</a></h1>
 <p>To use GBSDK you best have a few other resources at hand.</p>
 <ul>
-<li><a href="https://gbdev.io/pandocs/">Pandocs</a>: The ultimate resource. Read this, memorize it. Read it again. Everything about how the hardware works is in here.
+<li><a href="https://gbdev.io/pandocs/">Pandocs</a>: The ultimate resource. Read this, memorize it. Read it again. Everything about how the gameboy hardware works is in here.
 And some things are essential to understand. Especially most of the rendering section (everything except the Pixel FIFO).</li>
-<li>Some kind of C tutorial. If you don't know how to program in C yet, you better get some basic understanding of what functions, variables, parameters, globals, locals, etc are. (still need some recommendation for the best tutorial)</li>
+<li>Some kind of C tutorial. If you don't know how to program in C yet, you better get some basic understanding of what functions, variables, parameters, globals, locals, etc are. <em>(still need some recommendation for a good tutorial)</em></li>
 </ul>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="setup"><a class="header" href="#setup">Setup</a></h1>
 <p>The following chapters will outline how to get started with GBSDK:</p>
@@ -244,6 +253,62 @@ cd ..
 <h2 id="macos"><a class="header" href="#macos">MacOS</a></h2>
 <p>Seriously. No clue, follow Linux installation mostly, I guess. Something something <code>brew</code> instead of <code>apt-get</code>?</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="new-project"><a class="header" href="#new-project">New project</a></h1>
+<p>There are two ways to setup a new project:</p>
+<ol>
+<li>Use the <a href="https://github.com/daid/gbsdk-template">template</a> on github and directly create a new repository</li>
+<li>From scratch</li>
+</ol>
+<h2 id="using-the-template"><a class="header" href="#using-the-template">Using the template</a></h2>
+<p>First, make sure you have a github account, and that you are logged in.</p>
+<p>Next, select the <strong>Use this template</strong> button on the <a href="https://github.com/daid/gbsdk-template">template</a> page, and create a your own repository.</p>
+<p>You can clone this with the github desktop application, or from the commandline (also in the gbsdk-windows-environment) with:</p>
+<pre><code class="language-sh"># Replace daid/gbsdk-template.git with your own repository
+git clone https://github.com/daid/gbsdk-template.git --recursive
+</code></pre>
+<p>Be sure to add <code>--recursive</code> to get the gbsdk submodule!</p>
+<p>This gives you a template project which is ready to be build. You're now ready to <a href="setup/configuration.html">setup build configuration</a>.</p>
+<h2 id="set-up-a-project-from-scratch"><a class="header" href="#set-up-a-project-from-scratch">Set up a project from scratch</a></h2>
+<p>Your project will need 3 things:</p>
+<ol>
+<li>A Makefile</li>
+<li>gbsdk</li>
+<li>A directory for source files, and for asset files</li>
+</ol>
+<h3 id="makefile"><a class="header" href="#makefile">Makefile</a></h3>
+<p>The Makefile is very bare bones, it just needs to define some project settings. So make a new empty text file with the following contents:</p>
+<pre><code class="language-makefile"># Name of your project, will set the name of your ROM.
+PROJECT_NAME := Project Name
+# Run &quot;rgbfix --mbc-type help&quot; for possible MBC types
+MBC     := ROM
+# Target should be a combination of DMG, CGB and SGB
+TARGETS := DMG
+
+include gbsdk/rules.mk
+</code></pre>
+<h3 id="gbsdk"><a class="header" href="#gbsdk">gbsdk</a></h3>
+<p>Next to the makefile, you need a directory named &quot;gbsdk&quot; with the gbsdk contents. You can get this as a git submodule, a git clone or downloading the zip from <a href="https://github.com/daid/gbsdk">https://github.com/daid/gbsdk</a></p>
+<p>Make sure the directory is named gbsdk (or that the makefile is adjusted to look at the right directory)</p>
+<h3 id="source-directory"><a class="header" href="#source-directory">Source directory</a></h3>
+<p>Create two empty directories, one named <code>src</code> and one named <code>assets</code>.
+In the <code>src</code> directory create a <code>main.c</code> file with the following contents:</p>
+<pre><code class="language-c">#include &lt;sdk/hardware.h&gt;
+
+void main() {
+}
+</code></pre>
+<p>This creates an bare minimum piece of code that compiles but does nothing.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="project-configuration"><a class="header" href="#project-configuration">Project configuration</a></h1>
+<p>Main project configuration is set in the Makefile in your project directory. It configures the following settings:</p>
+<h2 id="project_name"><a class="header" href="#project_name">PROJECT_NAME</a></h2>
+<p>Sets the name of the resulting rom file. As well as the title stored in this rom (which some emulators show, but otherwise has no effect)</p>
+<h2 id="mbc"><a class="header" href="#mbc">MBC</a></h2>
+<p>This defines which <a href="https://gbdev.io/pandocs/MBCs.html">MBC</a> is used for the rom. As well as which extra features this MBC should support.</p>
+<p>For example, if you want a large rom with save games, you'll most likely need <code>MBC := MBC5+RAM+BATTERY</code></p>
+<p><strong>TODO: There is no way to set SRAM size yet...</strong></p>
+<h2 id="targets"><a class="header" href="#targets">TARGETS</a></h2>
+<p>This defines which hardware the rom targets. It can be any combination of DMG, CGB and SGB.</p>
+<p>For example: <code>TARGETS := DMG CGB</code> create a rom that targets both the DMG and CGB, and should be able to run on both, and enables color features on the CGB.</p>
+<p>Note that not having a target enabled will not expose the relevant API functions. So if SGB is not in the TARGETS list, then for example the <code>sgb_send()</code> function will not be available.</p>
 
                     </main>
 
