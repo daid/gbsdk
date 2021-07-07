@@ -2,11 +2,11 @@
 
 - [Introduction](introduction.md)
   - [Summary](introduction/summary.md)
-  - [Required reading](introduction/reading.md)
+  - [Additional reading](introduction/reading.md)
 - [Setup](setup.md)
   - [Installation](setup/installation.md)
   - [New project](setup/newproject.md)
-  - [Project configuration]()
+  - [Project configuration](setup/configuration.md)
   - [Building & Running]()
 - [C API]()
   - [Video]()
