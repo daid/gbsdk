@@ -36,6 +36,7 @@ CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc
 ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
 LDFLAGS  := --pad 0xFF
 FIXFLAGS := --validate --pad-value 0xFF --title "$(PROJECT_NAME)" --mbc-type "$(MBC)" -l 0x33
+ROM_EXTENSION := gb
 
 ifeq ($(filter CGB,$(TARGETS)),) # Not targeting CGB, so disable CGB features
 	CFLAGS  += -DCGB=0
@@ -49,6 +50,7 @@ else
 	else
 		FIXFLAGS += --color-compatible
 	endif
+    ROM_EXTENSION := gbc
 endif
 ifeq ($(filter SGB,$(TARGETS)),) # Not targeting SGB, so disable SGB features
 	CFLAGS  += -DSGB=0
@@ -62,7 +64,7 @@ ifneq ($(findstring RAM,$(MBC)),)
 	FIXFLAGS += --ram-size 2
 endif
 
-all: $(PROJECT_NAME).gb
+all: $(PROJECT_NAME).$(ROM_EXTENSION)
 
 # Rules to make c files
 $(BUILD)/%.c.as: %.c
@@ -115,7 +117,7 @@ $(BUILD)/%.asm.o: %.asm $(BUILD)/%.asm.d
 -include $(patsubst %.asm, $(BUILD)/%.asm.d, $(ASM))
 
 # Rule to build the final rom
-$(PROJECT_NAME).gb $(PROJECT_NAME).map $(PROJECT_NAME).sym: $(OBJS)
+$(PROJECT_NAME).$(ROM_EXTENSION) $(PROJECT_NAME).map $(PROJECT_NAME).sym: $(OBJS)
 	@echo Linking $@
 	$(Q)rgblink $(LDFLAGS) $^ -o $@ -m $(basename $@).map -n $(basename $@).sym
 	$(Q)rgbfix $(FIXFLAGS) $@
@@ -143,7 +145,7 @@ $(BUILD)/gsinit.end.o:
 	@/bin/echo -e 'SECTION FRAGMENT "GSINIT", ROMX, BANK[1]\n  ret' | rgbasm - -o $@
 
 clean:
-	@rm -rf $(BUILD) $(PROJECT_NAME).gb
+	@rm -rf $(BUILD) $(PROJECT_NAME).$(ROM_EXTENSION) $(PROJECT_NAME).map $(PROJECT_NAME).sym
 
 # Do not remove intermediate files (like assets, c->asm files, etc)
 .SECONDARY:
