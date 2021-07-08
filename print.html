@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="introduction/summary.html"><strong aria-hidden="true">1.1.</strong> Summary</a></li><li class="chapter-item expanded "><a href="introduction/reading.html"><strong aria-hidden="true">1.2.</strong> Additional reading</a></li></ol></li><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">2.</strong> Setup</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="setup/newproject.html"><strong aria-hidden="true">2.2.</strong> New project</a></li><li class="chapter-item expanded "><a href="setup/configuration.html"><strong aria-hidden="true">2.3.</strong> Project configuration</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.4.</strong> Building &amp; Running</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> C API</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.</strong> Video</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.1.</strong> Background</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.2.</strong> Sprites</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.3.</strong> Gameboy Color</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Joypad</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.3.</strong> Banking</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Super Gameboy</div></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="introduction/summary.html"><strong aria-hidden="true">1.1.</strong> Summary</a></li><li class="chapter-item expanded "><a href="introduction/reading.html"><strong aria-hidden="true">1.2.</strong> Additional reading</a></li></ol></li><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">2.</strong> Setup</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="setup/newproject.html"><strong aria-hidden="true">2.2.</strong> New project</a></li><li class="chapter-item expanded "><a href="setup/configuration.html"><strong aria-hidden="true">2.3.</strong> Project configuration</a></li><li class="chapter-item expanded "><a href="setup/running.html"><strong aria-hidden="true">2.4.</strong> Building &amp; Running</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> C API</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.</strong> Video</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.1.</strong> Background</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.2.</strong> Sprites</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.3.</strong> Gameboy Color</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Joypad</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.3.</strong> Banking</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Super Gameboy</div></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -309,6 +309,30 @@ void main() {
 <p>This defines which hardware the rom targets. It can be any combination of DMG, CGB and SGB.</p>
 <p>For example: <code>TARGETS := DMG CGB</code> create a rom that targets both the DMG and CGB, and should be able to run on both, and enables color features on the CGB.</p>
 <p>Note that not having a target enabled will not expose the relevant API functions. So if SGB is not in the TARGETS list, then for example the <code>sgb_send()</code> function will not be available.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="building--running"><a class="header" href="#building--running">Building &amp; Running</a></h1>
+<h2 id="building-your-project"><a class="header" href="#building-your-project">Building your project</a></h2>
+<p>Building your project is the easest thing ever. Just run the command: <code>make -j4</code></p>
+<p>You'll first have to <code>cd</code> to the directory of your project. So, for example, on windows, if you have your project in your <code>Documents</code>. You'll need to open the gbsdk-bash.exe and run the following steps:</p>
+<pre><code class="language-sh">cd ~/Documents/MostAwesomeGameboyProjectEver
+make -j4
+</code></pre>
+<p>With a bit of luck, you'll get a <code>MostAwesomeGameboyProjectEver.gb</code> file.</p>
+<h2 id="running-your-rom"><a class="header" href="#running-your-rom">Running your rom</a></h2>
+<p>There are many ways to run your rom. All emulators listed here have very high emulation accuracy, meaning that if they run in the emulator, it's pretty much ensured that it will run on real hardware.</p>
+<ul>
+<li><a href="https://bgb.bircd.org/">BGB</a> is pretty much the goto emulator on Windows. It has debugging tools, but only for assembly.</li>
+<li><a href="https://emulicious.net/">Emulicious</a> is another excellent choice. It has debugging tools. (TODO: Check if C level debugging works with the vscode extension)</li>
+<li><a href="https://sameboy.github.io/">SameBoy</a> excellent emulator. But, debugging tools are only available on MacOS.</li>
+<li><a href="https://krikzz.com/store/home/46-everdrive-gb.html">EverDrive-GB X7</a> while emulators are great. Nothing can replace testing on real hardware. The EverDrive flash carts are the top of the line carts.
+The X7 has all the features you would want, but is also the most expensive model. The X3 or X5 could be enough for your usage.</li>
+<li><a href="https://www.ezflash.cn/product/ezflash-junior/">EZ-Flash Jr</a> the budget flash cart. It has most of the same features as the EverDrive-GB X7, but is cheaper. However, it's power consumption is higher so batteries run dry quicker.</li>
+</ul>
+<p>One important reason to run on real hardware is the screen. The screens of the gameboy are quite different (in a bad way) from modern LCDs, colors will look different, motion blur on the DMG is a real thing. While emulators have options to emulate this,
+it never really matches the real deal.</p>
+<h2 id="note"><a class="header" href="#note">Note</a></h2>
+<p>In some cases, if you rename files, you might get an <code>No rule to make target</code> error. In this case first run <code>make clean</code>. This is an issue that still needs to be solved in GBSDK.</p>
+<p><strong>Stay away from VisualBoyAdvance</strong> this emulator is used a lot, but it is buggy and broken accuracy wise. There is a good chance that you make your rom bug free on this emulator and that it does not run
+on real hardware.</p>
 
                     </main>
 
