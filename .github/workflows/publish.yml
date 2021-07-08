@@ -24,8 +24,8 @@ jobs:
           unzip mdbook-linkcheck.zip mdbook-linkcheck
           chmod +x mdbook-linkcheck
       - name: build
-        #env:
-        #  MDBOOK_OUTPUT__LINKCHECK__COMMAND: "./mdbook-linkcheck"
+        env:
+          MDBOOK_OUTPUT__LINKCHECK__COMMAND: "./mdbook-linkcheck"
         run: mdbook build
 
       - name: Deploy
@@ -33,4 +33,4 @@ jobs:
         if: github.ref == 'refs/heads/book'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./book
+          publish_dir: ./book/html
