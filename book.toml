@@ -8,3 +8,7 @@ title = "Gameboy Software Development Kit"
 [output.html]
 default-theme = "ayu"
 preferred-dark-theme = "ayu"
+
+[output.linkcheck]
+follow-web-links = true
+optional = true
