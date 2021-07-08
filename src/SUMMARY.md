@@ -7,7 +7,7 @@
   - [Installation](setup/installation.md)
   - [New project](setup/newproject.md)
   - [Project configuration](setup/configuration.md)
-  - [Building & Running]()
+  - [Building & Running](setup/running.md)
 - [C API]()
   - [Video]()
     - [Background]()
