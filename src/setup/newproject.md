@@ -33,7 +33,7 @@ Your project will need 3 things:
 The Makefile is very bare bones, it just needs to define some project settings. So make a new empty text file with the following contents:
 ```makefile
 # Name of your project, will set the name of your ROM.
-PROJECT_NAME := Project Name
+PROJECT_NAME := Project_Name
 # Run "rgbfix --mbc-type help" for possible MBC types
 MBC     := ROM
 # Target should be a combination of DMG, CGB and SGB
