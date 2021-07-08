@@ -26,6 +26,10 @@ LIBC    += _divuint.c _divsint.c _mulint.c _modsint.c _moduint.c
 #LIBC    += _divulong.c _divslong.c _mullong.c _modslong.c _modulong.c
 LIBC_PATH := $(subst \,/,$(shell sdcc -mgbz80 --print-search-dirs | grep gbz80 | tail -n 1))/../src
 
+ifneq (1,$(words [$(LIBC_PATH)]))
+$(error "your environment or sdcc is installed in a path with spaces in it, this is not allowed, as it will break sdcc")
+endif
+
 Q ?= @
 
 BUILD    := _build
