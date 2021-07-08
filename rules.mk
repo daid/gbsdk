@@ -41,6 +41,8 @@ ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
 LDFLAGS  := --pad 0xFF
 FIXFLAGS := --validate --pad-value 0xFF --title "$(PROJECT_NAME)" --mbc-type "$(MBC)" -l 0x33
 ROM_EXTENSION := gb
+# Replace spaces with underscores in the project name.
+PROJECT_NAME := $(subst $() $(),_,$(PROJECT_NAME))
 
 ifeq ($(filter CGB,$(TARGETS)),) # Not targeting CGB, so disable CGB features
 	CFLAGS  += -DCGB=0
