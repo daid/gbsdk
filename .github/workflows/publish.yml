@@ -24,8 +24,8 @@ jobs:
           unzip mdbook-linkcheck.zip mdbook-linkcheck
           chmod +x mdbook-linkcheck
       - name: build
-        #env:
-        #  MDBOOK_OUTPUT__LINKCHECK__COMMAND: "./mdbook-linkcheck"
+        env:
+          MDBOOK_OUTPUT__LINKCHECK__COMMAND: "./mdbook-linkcheck"
         run: mdbook build
 
       - name: Deploy
