@@ -26,7 +26,6 @@ jobs:
           chmod +x mdbook-linkcheck
       - env:
           MDBOOK_OUTPUT__LINKCHECK__COMMAND: "./mdbook-linkcheck"
-          MDBOOK_OUTPUT__LINKCHECK__follow_web_links: "true"
         run: mdbook build
 
       - name: Deploy
