@@ -1,5 +1,6 @@
 include "sdk/hardware.inc"
 
+
 SECTION "Header", ROM0[$100]
     di
     jp startRom
