@@ -99,6 +99,8 @@ def processExpression():
             sys.stdout.write(')')
         if t.isA('ID') and t.value.startswith("b_"):
             t.value = "BANK(%s)" % (t.value[1:])
+        if t.isA('ID') and t.value.startswith("___bank__"):
+            t.value = "BANK(%s)" % (t.value[8:])
         if t.isA('NEWLINE') or t.isA('OP', ')') or t.isA('OP', ','):
             break
         sys.stdout.write(t.value)

@@ -5,7 +5,8 @@
 
 #define EXTERN_ASSET(var_name) \
     extern const uint8_t var_name[]; \
-    extern const uint8_t var_name ## _end[]
+    extern const uint8_t var_name ## _end[]; \
+    extern const void __bank__ ## var_name
 
 #define ASSET(var_name, filename) \
     void __ ## var_name ## __() __naked { \
