@@ -38,7 +38,7 @@ OBJS     := $(patsubst %, $(BUILD)/%.o, $(ASM) $(SRC)) $(patsubst %, $(BUILD)/li
 
 CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc
 ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
-LDFLAGS  := --pad 0xFF
+LDFLAGS  := --pad 0xFF --wramx
 FIXFLAGS := --validate --pad-value 0xFF --title "$(PROJECT_NAME)" --mbc-type "$(MBC)" -l 0x33
 ROM_EXTENSION := gb
 # Replace spaces with underscores in the project name.
