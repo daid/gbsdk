@@ -1,8 +1,13 @@
 #ifndef GBSDK_HARDWARE_H
 #define GBSDK_HARDWARE_H
 
+// We need to disable warning 182, as SDCC 4.1.0 incorrectly thinks registers are in 0x0000 to 0x00FF range.
+//  putting the registers in the 0x0000-0x00FF range works most of the time, but sometimes causes incorrect
+//  code generation.
+#pragma disable_warning 182
+
 // Register for reading joy pad info. (R/W)
-static volatile __sfr __at(0x00) rP1;
+static volatile __sfr __at(0xFF00) rP1;
 
 #define P1_5 0b00100000 // P15 out port, set to 0 to get buttons
 #define P1_4 0b00010000 // P14 out port, set to 0 to get dpad
@@ -16,22 +21,22 @@ static volatile __sfr __at(0x00) rP1;
 #define P1_GET_NONE (P1_4 | P1_5)
 
 // Serial Transfer Data (R/W)
-static volatile __sfr __at(0x01) rSB;
+static volatile __sfr __at(0xFF01) rSB;
 
 // Serial I/O Control (R/W)
-static volatile __sfr __at(0x02) rSC;
+static volatile __sfr __at(0xFF02) rSC;
 
 // Divider register (R/W)
-static volatile __sfr __at(0x04) rDIV;
+static volatile __sfr __at(0xFF04) rDIV;
 
 // Timer counter (R/W)
-static volatile __sfr __at(0x05) rTIMA;
+static volatile __sfr __at(0xFF05) rTIMA;
 
 // Timer modulo (R/W)
-static volatile __sfr __at(0x06) rTMA;
+static volatile __sfr __at(0xFF06) rTMA;
 
 // Timer control (R/W)
-static volatile __sfr __at(0x07) rTAC;
+static volatile __sfr __at(0xFF07) rTAC;
 
 #define TAC_START 0b00000100
 #define TAC_STOP 0b00000000
@@ -41,7 +46,7 @@ static volatile __sfr __at(0x07) rTAC;
 #define TAC_262KHZ 0b00000001
 
 // Interrupt Flag (R/W)
-static volatile __sfr __at(0x0F) rIF;
+static volatile __sfr __at(0xFF0F) rIF;
 
 // AUD1SWEEP/NR10 ($FF10)
 // Sweep register (R/W)
@@ -52,7 +57,7 @@ static volatile __sfr __at(0x0F) rIF;
 //           1: Subtraction (frequency increases???)
 // Bit 2-0 - Number of sweep shift (# 0-7)
 // Sweep Time: (n*7.8ms)
-static volatile __sfr __at(0x10) rNR10;
+static volatile __sfr __at(0xFF10) rNR10;
 #define rAUD1SWEEP rNR10
 
 #define AUD1SWEEP_UP 0b00000000
@@ -63,7 +68,7 @@ static volatile __sfr __at(0x10) rNR10;
 //
 // Bit 7-6 - Wave Pattern Duty (00:12.5% 01:25% 10:50% 11:75%)
 // Bit 5-0 - Sound length data (# 0-63)
-static volatile __sfr __at(0x11) rNR11;
+static volatile __sfr __at(0xFF11) rNR11;
 #define rAUD1LEN rNR11
 
 // AUD1ENV/NR12 ($FF12)
@@ -74,12 +79,12 @@ static volatile __sfr __at(0x11) rNR11;
 //           0: Decrease
 //           1: Range of increase
 // Bit 2-0 - Number of envelope sweep (# 0-7)
-static volatile __sfr __at(0x12) rNR12;
+static volatile __sfr __at(0xFF12) rNR12;
 #define rAUD1ENV rNR12
 
 // AUD1LOW/NR13 ($FF13)
 // Frequency low byte (W)
-static volatile __sfr __at(0x13) rNR13;
+static volatile __sfr __at(0xFF13) rNR13;
 #define rAUD1LOW rNR13
 
 // AUD1HIGH/NR14 ($FF14)
@@ -88,47 +93,47 @@ static volatile __sfr __at(0x13) rNR13;
 // Bit 7   - Initial (when set, sound restarts)
 // Bit 6   - Counter/consecutive selection
 // Bit 2-0 - Frequency's higher 3 bits
-static volatile __sfr __at(0x14) rNR14;
+static volatile __sfr __at(0xFF14) rNR14;
 #define rAUD1HIGH rNR14
 
 // AUD2LEN/NR21 ($FF16)
 // Sound Length; Wave Pattern Duty (R/W)
 //
 // see AUD1LEN for info
-static volatile __sfr __at(0x16) rNR21;
+static volatile __sfr __at(0xFF16) rNR21;
 #define rAUD2LEN rNR21
 
 // AUD2ENV/NR22 ($FF17)
 // Envelope (R/W)
 //
 // see AUD1ENV for info
-static volatile __sfr __at(0x17) rNR22;
+static volatile __sfr __at(0xFF17) rNR22;
 #define rAUD2ENV rNR22
 
 // AUD2LOW/NR23 ($FF18)
 // Frequency low byte (W)
-static volatile __sfr __at(0x18) rNR23;
+static volatile __sfr __at(0xFF18) rNR23;
 #define rAUD2LOW rNR23
 
 // AUD2HIGH/NR24 ($FF19)
 // Frequency high byte (W)
 //
 // see AUD1HIGH for info
-static volatile __sfr __at(0x19) rNR24;
+static volatile __sfr __at(0xFF19) rNR24;
 #define rAUD2HIGH rNR24
 
 // AUD3ENA/NR30 ($FF1A)
 // Sound on/off (R/W)
 //
 // Bit 7   - Sound ON/OFF (1=ON,0=OFF)
-static volatile __sfr __at(0x1A) rNR30;
+static volatile __sfr __at(0xFF1A) rNR30;
 #define rAUD3ENA rNR30
 
 // AUD3LEN/NR31 ($FF1B)
 // Sound length (R/W)
 //
 // Bit 7-0 - Sound length
-static volatile __sfr __at(0x1B) rNR31;
+static volatile __sfr __at(0xFF1B) rNR31;
 #define rAUD3LEN rNR31
 
 // AUD3LEVEL/NR32 ($FF1C)
@@ -139,35 +144,35 @@ static volatile __sfr __at(0x1B) rNR31;
 //           01: 1/1
 //           10: 1/2
 //           11: 1/4
-static volatile __sfr __at(0x1C) rNR32;
+static volatile __sfr __at(0xFF1C) rNR32;
 #define rAUD3LEVEL rNR32
 
 // AUD3LOW/NR33 ($FF1D)
 // Frequency low byte (W)
 //
 // see AUD1LOW for info
-static volatile __sfr __at(0x1D) rNR33;
+static volatile __sfr __at(0xFF1D) rNR33;
 #define rAUD3LOW rNR33
 
 // AUD3HIGH/NR34 ($FF1E)
 // Frequency high byte (W)
 //
 // see AUD1HIGH for info
-static volatile __sfr __at(0x1E) rNR34;
+static volatile __sfr __at(0xFF1E) rNR34;
 #define rAUD3HIGH rNR34
 
 // AUD4LEN/NR41 ($FF20)
 // Sound length (R/W)
 //
 // Bit 5-0 - Sound length data (# 0-63)
-static volatile __sfr __at(0x20) rNR41;
+static volatile __sfr __at(0xFF20) rNR41;
 #define rAUD4LEN rNR41
 
 // AUD4ENV/NR42 ($FF21)
 // Envelope (R/W)
 //
 // see AUD1ENV for info
-static volatile __sfr __at(0x21) rNR42;
+static volatile __sfr __at(0xFF21) rNR42;
 #define rAUD4ENV rNR42
 
 // AUD4POLY/NR43 ($FF22)
@@ -182,14 +187,14 @@ static volatile __sfr __at(0x21) rNR42;
 // Bit 2-0 - Selection of the dividing ratio of frequencies (drf)
 //           000: f/4   001: f/8   010: f/16  011: f/24
 //           100: f/32  101: f/40  110: f/48  111: f/56  (f=4.194304 Mhz)
-static volatile __sfr __at(0x22) rNR43;
+static volatile __sfr __at(0xFF22) rNR43;
 #define rAUD4POLY rNR43
 
 // AUD4GO/NR44 ($FF23)
 //
 // Bit 7 -   Inital
 // Bit 6 -   Counter/consecutive selection
-static volatile __sfr __at(0x23) rNR44;
+static volatile __sfr __at(0xFF23) rNR44;
 #define rAUD4GO rNR44
 
 // AUDVOL/NR50 ($FF24)
@@ -199,7 +204,7 @@ static volatile __sfr __at(0x23) rNR44;
 // Bit 6-4 - SO2 output level (volume) (# 0-7)
 // Bit 3   - Vin->SO1 ON/OFF (Vin??)
 // Bit 2-0 - SO1 output level (volume) (# 0-7)
-static volatile __sfr __at(0x24) rNR50;
+static volatile __sfr __at(0xFF24) rNR50;
 #define rAUDVOL rNR50
 
 #define AUDVOL_VIN_LEFT 0b10000000 // SO2
@@ -216,7 +221,7 @@ static volatile __sfr __at(0x24) rNR50;
 // Bit 2   - Output sound 3 to SO1 terminal
 // Bit 1   - Output sound 2 to SO1 terminal
 // Bit 0   - Output sound 0 to SO1 terminal
-static volatile __sfr __at(0x25) rNR51;
+static volatile __sfr __at(0xFF25) rNR51;
 #define rAUDTERM rNR51
 
 // SO2
@@ -238,7 +243,7 @@ static volatile __sfr __at(0x25) rNR51;
 // Bit 2   - Sound 3 ON flag (read only)
 // Bit 1   - Sound 2 ON flag (read only)
 // Bit 0   - Sound 1 ON flag (read only)
-static volatile __sfr __at(0x26) rNR52;
+static volatile __sfr __at(0xFF26) rNR52;
 #define rAUDENA rNR52
 
 #define AUDENA_ON 0b10000000
@@ -246,7 +251,7 @@ static volatile __sfr __at(0x26) rNR52;
 
 // LCDC ($FF40)
 // LCD Control (R/W)
-static volatile __sfr __at(0x40) rLCDC;
+static volatile __sfr __at(0xFF40) rLCDC;
 
 #define LCDC_OFF 0b00000000 // LCD Control Operation
 #define LCDC_ON 0b10000000 // LCD Control Operation
@@ -267,7 +272,7 @@ static volatile __sfr __at(0x40) rLCDC;
 
 // STAT ($FF41)
 // LCDC Status   (R/W)
-static volatile __sfr __at(0x41) rSTAT;
+static volatile __sfr __at(0xFF41) rSTAT;
 
 #define STAT_LYC 0b01000000 // LYC=LY Coincidence (Selectable)
 #define STAT_MODE10 0b00100000 // Mode 10
@@ -282,27 +287,27 @@ static volatile __sfr __at(0x41) rSTAT;
 
 // SCY ($FF42)
 // Scroll Y (R/W)
-static volatile __sfr __at(0x42) rSCY;
+static volatile __sfr __at(0xFF42) rSCY;
 
 // SCX ($FF43)
 // Scroll X (R/W)
-static volatile __sfr __at(0x43) rSCX;
+static volatile __sfr __at(0xFF43) rSCX;
 
 // LY ($FF44)
 // LCDC Y-Coordinate (R)
 //
 // Values range from 0->153. 144->153 is the VBlank period.
-static volatile __sfr __at(0x44) rLY;
+static volatile __sfr __at(0xFF44) rLY;
 
 // LYC ($FF45)
 // LY Compare (R/W)
 //
 // When LY==LYC, STATF_LYCF will be set in STAT
-static volatile __sfr __at(0x45) rLYC;
+static volatile __sfr __at(0xFF45) rLYC;
 
 // DMA ($FF46)
 // DMA Transfer and Start Address (W)
-static volatile __sfr __at(0x46) rDMA;
+static volatile __sfr __at(0xFF46) rDMA;
 
 // BGP ($FF47)
 // BG Palette Data (W)
@@ -311,26 +316,26 @@ static volatile __sfr __at(0x46) rDMA;
 // Bit 5-4 - Intensity for %10
 // Bit 3-2 - Intensity for %01
 // Bit 1-0 - Intensity for %00
-static volatile __sfr __at(0x47) rBGP;
+static volatile __sfr __at(0xFF47) rBGP;
 
 // OBP0 ($FF48)
 // Object Palette 0 Data (W)
 //
 // See BGP for info
-static volatile __sfr __at(0x48) rOBP0;
+static volatile __sfr __at(0xFF48) rOBP0;
 
 // OBP1 ($FF49)
 // Object Palette 1 Data (W)
 //
 // See BGP for info
-static volatile __sfr __at(0x49) rOBP1;
+static volatile __sfr __at(0xFF49) rOBP1;
 
 // WY ($FF4A)
 // Window Y Position (R/W)
 //
 // 0 <= WY <= 143
 // When WY = 0, the window is displayed from the top edge of the LCD screen.
-static volatile __sfr __at(0x4A) rWY;
+static volatile __sfr __at(0xFF4A) rWY;
 
 // WX ($FF4B)
 // Window X Position (R/W)
@@ -338,13 +343,13 @@ static volatile __sfr __at(0x4A) rWY;
 // 7 <= WX <= 166
 // When WX = 7, the window is displayed from the left edge of the LCD screen.
 // Values of 0-6 and 166 are unreliable due to hardware bugs.
-static volatile __sfr __at(0x4B) rWX;
+static volatile __sfr __at(0xFF4B) rWX;
 
 
 #if CGB
 // SPEED ($FF4D)
 // Select CPU Speed (R/W)
-static volatile __sfr __at(0x4D) rKEY1;
+static volatile __sfr __at(0xFF4D) rKEY1;
 #define rSPD  rKEY1
 
 #define KEY1_DBLSPEED 0b10000000 // 0=Normal Speed, 1=Double Speed (R)
@@ -354,27 +359,27 @@ static volatile __sfr __at(0x4D) rKEY1;
 // Select Video RAM Bank (R/W)
 //
 // Bit 0 - Bank Specification (0: Specify Bank 0; 1: Specify Bank 1)
-static volatile __sfr __at(0x4F) rVBK;
+static volatile __sfr __at(0xFF4F) rVBK;
 
 // HDMA1 ($FF51)
 // High byte for Horizontal Blanking/General Purpose DMA source address (W)
-static volatile __sfr __at(0x51) rHDMA1;
+static volatile __sfr __at(0xFF51) rHDMA1;
 
 // HDMA2 ($FF52)
 // Low byte for Horizontal Blanking/General Purpose DMA source address (W)
-static volatile __sfr __at(0x52) rHDMA2;
+static volatile __sfr __at(0xFF52) rHDMA2;
 
 // HDMA3 ($FF53)
 // High byte for Horizontal Blanking/General Purpose DMA destination address (W)
-static volatile __sfr __at(0x53) rHDMA3;
+static volatile __sfr __at(0xFF53) rHDMA3;
 
 // HDMA4 ($FF54)
 // Low byte for Horizontal Blanking/General Purpose DMA destination address (W)
-static volatile __sfr __at(0x54) rHDMA4;
+static volatile __sfr __at(0xFF54) rHDMA4;
 
 // HDMA5 ($FF55)
 // Transfer length (in tiles minus 1)/mode/start for Horizontal Blanking, General Purpose DMA (R/W)
-static volatile __sfr __at(0x55) rHDMA5;
+static volatile __sfr __at(0xFF55) rHDMA5;
 
 #define HDMA5_MODE_GP 0b00000000 // General Purpose DMA (W)
 #define HDMA5_MODE_HBL 0b10000000 // HBlank DMA (W)
@@ -384,7 +389,7 @@ static volatile __sfr __at(0x55) rHDMA5;
 
 // RP ($FF56)
 // Infrared Communications Port (R/W)
-static volatile __sfr __at(0x56) rRP;
+static volatile __sfr __at(0xFF56) rRP;
 
 #define RP_ENREAD 0b11000000
 #define RP_DATAIN 0b00000010 // 0=Receiving IR Signal, 1=Normal
@@ -393,27 +398,27 @@ static volatile __sfr __at(0x56) rRP;
 
 // BCPS ($FF68)
 // Background Color Palette Specification (R/W)
-static volatile __sfr __at(0x68) rBCPS;
+static volatile __sfr __at(0xFF68) rBCPS;
 #define BCPS_AUTOINC 0b10000000 // Auto Increment (0=Disabled, 1=Increment after Writing)
 
 // BCPD ($FF69)
 // Background Color Palette Data (R/W)
-static volatile __sfr __at(0x69) rBCPD;
+static volatile __sfr __at(0xFF69) rBCPD;
 
 // OCPS ($FF6A)
 // Object Color Palette Specification (R/W)
-static volatile __sfr __at(0x6A) rOCPS;
+static volatile __sfr __at(0xFF6A) rOCPS;
 #define OCPS_AUTOINC 0b10000000 // Auto Increment (0=Disabled, 1=Increment after Writing)
 
 // OCPD ($FF6B)
 // Object Color Palette Data (R/W)
-static volatile __sfr __at(0x6B) rOCPD;
+static volatile __sfr __at(0xFF6B) rOCPD;
 
 // SMBK/SVBK ($FF70)
 // Select Main RAM Bank (R/W)
 //
 // Bit 2-0 - Bank Specification (0,1: Specify Bank 1; 2-7: Specify Banks 2-7)
-static volatile __sfr __at(0x70) rSVBK;
+static volatile __sfr __at(0xFF70) rSVBK;
 #define rSMBK rSVBK
 
 // PCM12 ($FF76)
@@ -421,20 +426,20 @@ static volatile __sfr __at(0x70) rSVBK;
 //
 // Bit 7-4 - Copy of sound channel 2's PCM amplitude
 // Bit 3-0 - Copy of sound channel 1's PCM amplitude
-static volatile __sfr __at(0x76) rPCM12;
+static volatile __sfr __at(0xFF76) rPCM12;
 
 // PCM34 ($FF77)
 // Sound channel 3&4 PCM amplitude (R)
 //
 // Bit 7-4 - Copy of sound channel 4's PCM amplitude
 // Bit 3-0 - Copy of sound channel 3's PCM amplitude
-static volatile __sfr __at(0x77) rPCM34;
+static volatile __sfr __at(0xFF77) rPCM34;
 
 #endif //CGB
 
 // IE ($FFFF)
 // Interrupt Enable (R/W)
-static volatile __sfr __at(0xFF) rIE;
+static volatile __sfr __at(0xFFFF) rIE;
 
 #define IE_HILO 0b00010000 // Transition from High to Low of Pin number P10-P13
 #define IE_SERIAL 0b00001000 // Serial I/O transfer end
