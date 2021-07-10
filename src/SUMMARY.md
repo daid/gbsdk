@@ -17,4 +17,5 @@
     - [Gameboy Color]()
   - [Joypad](api/c/joypad.md)
   - [Banking]()
+  - [Interrupts]()
   - [Super Gameboy]()

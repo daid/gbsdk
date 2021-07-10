@@ -4,11 +4,6 @@ By including the file `sdk/hardware.h` you will get access to all the registers 
 
 Each register is prefixed with an `r`, so `LCDC` becomes `rLCDC`. Registers that are CGB only will only be available of the CGB is enabled in the project configuration.
 
-Next to the registers, a few other macros are provided for working with interrupts:
-- `HALT()`: execute the `halt` instruction, which will wait for an interrupt.
-- `DISABLE_INTERRUPTS()`: Disables the global interrupt mask, no interrupts will execute interrupt handlers.
-- `ENABLE_INTERRUPTS()`: Enable the global interrupt mask. Any enabled interrupt in `rIE` will execute the interrupt handler.
-
 Examples:
 ```c
 #include <gbsdk/hardware.h>
