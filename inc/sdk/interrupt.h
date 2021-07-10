@@ -24,4 +24,4 @@
 #define DISABLE_INTERRUPTS() __asm__("di")
 #define ENABLE_INTERRUPTS() __asm__("ei")
 
-#endif//LIB_BANKING_H
+#endif//GBSDK_INTERRUPT_H

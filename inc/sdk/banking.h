@@ -11,4 +11,4 @@ inline void switch_bank(uint8_t bank_nr) {
 }
 #define BANK_OF(symbol) ((uint8_t)&__bank__ ## symbol)
 
-#endif//LIB_BANKING_H
+#endif//GBSDK_BANKING_H
