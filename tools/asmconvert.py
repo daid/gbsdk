@@ -136,6 +136,10 @@ while tok:
         if start.value in {'.module', '.optsdcc', '.globl'}:
             while not tok.pop().isA('NEWLINE'):
                 pass
+        elif start.value == '.pusharea':
+            print('PUSHS')
+        elif start.value == '.poparea':
+            print('POPS')
         elif start.value == '.area':
             area_name = tok.pop().value
             if area_name == "_DATA":
@@ -156,6 +160,8 @@ while tok:
                 print('SECTION FRAGMENT "GSFINAL", ROMX, BANK[1]')
             elif area_name == "_auto":
                 print('SECTION FRAGMENT "code_%s", ROMX' % (module))
+            elif area_name.startswith("VECTOR_"):
+                print('SECTION "%s", ROM0[$%04x]' % (area_name, int(area_name[7:], 16)))
             else:
                 raise Exception(area_name)
             while not tok.pop().isA('NEWLINE'):

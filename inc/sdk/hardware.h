@@ -491,9 +491,4 @@ static volatile __sfr __at(0xFFFF) rIE;
 #endif
 
 
-// Defines for specific instructions
-#define HALT() __asm__("halt")
-#define DISABLE_INTERRUPTS() __asm__("di")
-#define ENABLE_INTERRUPTS() __asm__("ei")
-
 #endif
