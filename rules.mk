@@ -36,7 +36,7 @@ BUILD    := _build
 TOOLS    := $(MYDIR)/tools
 OBJS     := $(patsubst %, $(BUILD)/%.o, $(ASM) $(SRC)) $(patsubst %, $(BUILD)/libc/%.o, $(LIBC)) $(BUILD)/gsinit.end.o
 
-CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc
+CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc --max-allocs-per-node 25000
 ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
 LDFLAGS  := --pad 0xFF --wramx
 FIXFLAGS := --validate --pad-value 0xFF --title "$(PROJECT_NAME)" --mbc-type "$(MBC)" -l 0x33

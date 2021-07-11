@@ -144,6 +144,8 @@ while tok:
             area_name = tok.pop().value
             if area_name == "_DATA":
                 print('SECTION "%s_%s", WRAM0' % (module, area_name))
+            elif area_name == "_INITIALIZED":
+                print('SECTION FRAGMENT "INITIALIZED", WRAM0')
             elif area_name == "_DABS":
                 print('SECTION "%s_%s", SRAM' % (module, area_name))
             elif area_name == "_HOME":
@@ -158,6 +160,8 @@ while tok:
                 print('SECTION FRAGMENT "GSINIT", ROMX, BANK[1]')
             elif area_name == "_GSFINAL":
                 print('SECTION FRAGMENT "GSFINAL", ROMX, BANK[1]')
+            elif area_name == "_INITIALIZER":
+                print('SECTION FRAGMENT "INITIALIZER", ROMX, BANK[1]')
             elif area_name == "_auto":
                 print('SECTION FRAGMENT "code_%s", ROMX' % (module))
             elif area_name.startswith("VECTOR_"):
