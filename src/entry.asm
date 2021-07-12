@@ -19,8 +19,8 @@ ___globalsInitCode:
     ; This will be the first fragment of GSINIT.
     ld   bc, sizeof("INITIALIZER")
     assert sizeof("INITIALIZER") == sizeof("INITIALIZED")
-    ld   hl, ___globalsInitData
-    ld   de, ___globalsInitRam
+    ld   hl, startof("INITIALIZER")
+    ld   de, startof("INITIALIZED")
 :   ld   a, b
     or   c
     jr   z, :+
@@ -32,10 +32,8 @@ ___globalsInitCode:
 :
 
 SECTION FRAGMENT "INITIALIZER", ROMX, BANK[1]
-___globalsInitData:
     ; This will be the first fragment of INITIALIZER.
     ; Other fragments can fill this with data which will be copied to WRAM in the "INITIALIZED" fragment
 
 SECTION FRAGMENT "INITIALIZED", WRAM0
-___globalsInitRam:
     ; This will be the first fragment of INITIALIZED.
