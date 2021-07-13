@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="introduction/summary.html"><strong aria-hidden="true">1.1.</strong> Summary</a></li><li class="chapter-item expanded "><a href="introduction/reading.html"><strong aria-hidden="true">1.2.</strong> Additional reading</a></li></ol></li><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">2.</strong> Setup</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="setup/newproject.html"><strong aria-hidden="true">2.2.</strong> New project</a></li><li class="chapter-item expanded "><a href="setup/configuration.html"><strong aria-hidden="true">2.3.</strong> Project configuration</a></li><li class="chapter-item expanded "><a href="setup/running.html"><strong aria-hidden="true">2.4.</strong> Building &amp; Running</a></li></ol></li><li class="chapter-item expanded "><a href="api/c.html"><strong aria-hidden="true">3.</strong> C API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="api/c/hardware.html"><strong aria-hidden="true">3.1.</strong> Registers</a></li><li class="chapter-item expanded "><a href="api/c/video.html"><strong aria-hidden="true">3.2.</strong> Video</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="api/c/control.html"><strong aria-hidden="true">3.2.1.</strong> LCD Control</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.2.</strong> Tile Data</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.3.</strong> Tile Maps</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.4.</strong> OAM (Sprites)</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.5.</strong> Gameboy Color</div></li></ol></li><li class="chapter-item expanded "><a href="api/c/joypad.html"><strong aria-hidden="true">3.3.</strong> Joypad</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.4.</strong> Banking</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.5.</strong> Interrupts</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.6.</strong> Super Gameboy</div></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="introduction/summary.html"><strong aria-hidden="true">1.1.</strong> Summary</a></li><li class="chapter-item expanded "><a href="introduction/reading.html"><strong aria-hidden="true">1.2.</strong> Additional reading</a></li></ol></li><li class="chapter-item expanded "><a href="setup.html"><strong aria-hidden="true">2.</strong> Setup</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="setup/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="setup/newproject.html"><strong aria-hidden="true">2.2.</strong> New project</a></li><li class="chapter-item expanded "><a href="setup/configuration.html"><strong aria-hidden="true">2.3.</strong> Project configuration</a></li><li class="chapter-item expanded "><a href="setup/running.html"><strong aria-hidden="true">2.4.</strong> Building &amp; Running</a></li></ol></li><li class="chapter-item expanded "><a href="api/c.html"><strong aria-hidden="true">3.</strong> C API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="api/c/hardware.html"><strong aria-hidden="true">3.1.</strong> Registers</a></li><li class="chapter-item expanded "><a href="api/c/video.html"><strong aria-hidden="true">3.2.</strong> Video</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="api/c/control.html"><strong aria-hidden="true">3.2.1.</strong> LCD Control</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.2.</strong> Tile Data</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.3.</strong> Tile Maps</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.4.</strong> OAM (Sprites)</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.5.</strong> Gameboy Color</div></li></ol></li><li class="chapter-item expanded "><a href="api/c/joypad.html"><strong aria-hidden="true">3.3.</strong> Joypad</a></li><li class="chapter-item expanded "><a href="api/c/banking.html"><strong aria-hidden="true">3.4.</strong> Banking</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.5.</strong> Interrupts</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.6.</strong> Super Gameboy</div></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -358,7 +358,13 @@ void function() {
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="video"><a class="header" href="#video">Video</a></h1>
 <p>TODO</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="lcd-control"><a class="header" href="#lcd-control">LCD Control</a></h1>
-<p>Most of the LCD control features are handled by the <a href="api/c/hardware.html">Register</a> directly, without any API abstraction.</p>
+<p>Most of the LCD control features are handled by the <a href="api/c/hardware.html">registers</a> directly, without any API abstraction.</p>
+<ul>
+<li><code>rLCDC</code>: LCD on/off and various feature bits.</li>
+<li><code>rSTAT</code> <code>rLY</code> <code>rLYC</code>: LCD runtime status and interrupt related.</li>
+<li><code>rSCX</code> <code>rSCY</code>: Background render offset.</li>
+<li><code>rWX</code> <code>rWY</code>: Window position.</li>
+</ul>
 <p>The <a href="https://gbdev.io/pandocs/">pandocs</a> section on <a href="https://gbdev.io/pandocs/Rendering.html">rendering</a> explains all these registers really well.</p>
 <p>There is one support function:</p>
 <pre><code class="language-c">void lcd_off(void);
@@ -399,6 +405,29 @@ void function() {
 		HALT();
 	}
 }</code></pre>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="banking"><a class="header" href="#banking">Banking</a></h1>
+<p>Banking is needed to fit more then 32KiB of ROM into a single Cartridge.
+The general process is as follows:</p>
+<blockquote>
+<ul>
+<li>Data and code is contained in banks.</li>
+<li>Data and code in bank0 is always available.</li>
+<li>Only one other bank is active at the same time, meaning that code in one bank cannot access code/data in another.</li>
+<li>It is possible to call code in another bank from a different bank, if setup correctly.</li>
+</ul>
+</blockquote>
+<p>Banking is one of the those things that makes Gameboy Progamming more complex.
+You need to think about what code you put in bank0. And what can be placed in banks.</p>
+<p>Banking with gbsdk (and sdcc) works per <code>.c</code> file. Each file can be assigned a bank. And all code/data of that will will then be placed inside that specific bank.</p>
+<p>You can use:</p>
+<pre><code class="language-c">#pragma bank 1 // Places this .c file in bank 1
+#pragma bank auto // Places this .c file in a bank assigned by the compiler.
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> Multiple <code>.c</code> files can be placed in the same bank, and the <code>auto</code> option can place multiple things in the same bank.</p>
+</blockquote>
+<h2 id="calling-functions-in-other-banks"><a class="header" href="#calling-functions-in-other-banks">Calling functions in other banks</a></h2>
+<p>TODO</p>
 
                     </main>
 
