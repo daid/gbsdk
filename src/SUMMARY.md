@@ -17,6 +17,6 @@
     - [OAM (Sprites)]()
     - [Gameboy Color]()
   - [Joypad](api/c/joypad.md)
-  - [Banking]()
+  - [Banking](api/c/banking.md)
   - [Interrupts]()
   - [Super Gameboy]()

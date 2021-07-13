@@ -1,6 +1,11 @@
 # LCD Control
 
-Most of the LCD control features are handled by the [Register](hardware.md) directly, without any API abstraction.
+Most of the LCD control features are handled by the [registers](hardware.md) directly, without any API abstraction.
+
+* `rLCDC`: LCD on/off and various feature bits.
+* `rSTAT` `rLY` `rLYC`: LCD runtime status and interrupt related.
+* `rSCX` `rSCY`: Background render offset.
+* `rWX` `rWY`: Window position.
 
 The [pandocs](https://gbdev.io/pandocs/) section on [rendering](https://gbdev.io/pandocs/Rendering.html) explains all these registers really well.
 
