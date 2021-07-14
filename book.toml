@@ -9,6 +9,7 @@ title = "Gameboy Software Development Kit"
 default-theme = "ayu"
 preferred-dark-theme = "ayu"
 git-repository-url = "https://github.com/daid/gbsdk/tree/book"
+edit-url-template = "https://github.com/daid/gbsdk/edit/book/{path}"
 
 [output.linkcheck]
 follow-web-links = true
