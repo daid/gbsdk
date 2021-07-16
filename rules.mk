@@ -148,7 +148,7 @@ $(BUILD)/assets/%.1bpp: assets/%.png
 # Special hack to place a ret instruction at the end of the GSINIT section.
 # This has to be linked last, as that ensures that this fragment is at the end of the "GSINIT" section.
 $(BUILD)/gsinit.end.o:
-	@/bin/echo -e 'SECTION FRAGMENT "GSINIT", ROMX, BANK[1]\n  ret' | rgbasm - -o $@
+	@printf 'SECTION FRAGMENT "GSINIT", ROMX, BANK[1]\n  ret' | rgbasm - -o $@
 
 clean:
 	@rm -rf $(BUILD) $(PROJECT_NAME).$(ROM_EXTENSION) $(PROJECT_NAME).map $(PROJECT_NAME).sym
