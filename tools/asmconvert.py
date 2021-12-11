@@ -178,7 +178,7 @@ while tok:
             sys.stdout.write("db ")
             sys.stdout.write(tok.pop().value)
             sys.stdout.write("\n")
-        elif start.value == '.db':
+        elif start.value == '.db' or start.value == '.byte':
             sys.stdout.write("db ")
             processParameter()
             while tok.peek().isA('OP', ','):
