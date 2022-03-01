@@ -225,6 +225,11 @@ while tok:
             tok.expect('ID', 'sp')
             tok.expect('OP', ')')
             sys.stdout.write("ld hl, sp + %s\n" % (t.value))
+        elif start.isA('ID', 'jp') and tok.peek().isA('OP', '('):
+            tok.pop()
+            tok.expect('ID', 'hl')
+            tok.expect('OP', ')')
+            sys.stdout.write("jp hl\n")
         else:
             sys.stdout.write("%s " % (start.value))
             if not tok.peek().isA('NEWLINE'):
