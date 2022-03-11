@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <sdk/hardware.h>
 
+#define OAM_Y_OFS 16 // add this to a screen-relative Y position to get an OAM Y position
+#define OAM_X_OFS 16 // add this to a screen-relative X position to get an OAM X position
 
 struct oam_entry {
     uint8_t y;

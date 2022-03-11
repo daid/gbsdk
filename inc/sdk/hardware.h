@@ -26,6 +26,14 @@ static volatile __sfr __at(0xFF01) rSB;
 // Serial I/O Control (R/W)
 static volatile __sfr __at(0xFF02) rSC;
 
+#define SCF_START 0b10000000 // Transfer Start Flag (1=Transfer in progress, or requested)
+#define SCF_SPEED 0b00000010 // Clock Speed (0=Normal, 1=Fast) ** CGB Mode Only **
+#define SCF_SOURCE 0b00000001 // Shift Clock (0=External Clock, 1=Internal Clock)
+
+#define SCB_START 7
+#define SCB_SPEED 1
+#define SCB_SOURCE 0
+
 // Divider register (R/W)
 static volatile __sfr __at(0xFF04) rDIV;
 
@@ -129,6 +137,9 @@ static volatile __sfr __at(0xFF19) rNR24;
 static volatile __sfr __at(0xFF1A) rNR30;
 #define rAUD3ENA rNR30
 
+#define AUD3ENA_OFF 0b00000000
+#define AUD3ENA_ON 0b10000000
+
 // AUD3LEN/NR31 ($FF1B)
 // Sound length (R/W)
 //
@@ -146,6 +157,11 @@ static volatile __sfr __at(0xFF1B) rNR31;
 //           11: 1/4
 static volatile __sfr __at(0xFF1C) rNR32;
 #define rAUD3LEVEL rNR32
+
+#define AUD3LEVEL_MUTE 0b00000000
+#define AUD3LEVEL_100  0b00100000
+#define AUD3LEVEL_50   0b01000000
+#define AUD3LEVEL_25   0b01100000
 
 // AUD3LOW/NR33 ($FF1D)
 // Frequency low byte (W)
@@ -190,9 +206,12 @@ static volatile __sfr __at(0xFF21) rNR42;
 static volatile __sfr __at(0xFF22) rNR43;
 #define rAUD4POLY rNR43
 
+#define AUD4POLY_15STEP 0b00000000
+#define AUD4POLY_7STEP 0b00001000
+
 // AUD4GO/NR44 ($FF23)
 //
-// Bit 7 -   Inital
+// Bit 7 -   Initial (when set, sound restarts)
 // Bit 6 -   Counter/consecutive selection
 static volatile __sfr __at(0xFF23) rNR44;
 #define rAUD4GO rNR44
@@ -200,10 +219,10 @@ static volatile __sfr __at(0xFF23) rNR44;
 // AUDVOL/NR50 ($FF24)
 // Channel control / ON-OFF / Volume (R/W)
 //
-// Bit 7   - Vin->SO2 ON/OFF (Vin??)
-// Bit 6-4 - SO2 output level (volume) (# 0-7)
-// Bit 3   - Vin->SO1 ON/OFF (Vin??)
-// Bit 2-0 - SO1 output level (volume) (# 0-7)
+// Bit 7   - Vin->SO2 ON/OFF (left)
+// Bit 6-4 - SO2 output level (left speaker) (# 0-7)
+// Bit 3   - Vin->SO1 ON/OFF (right)
+// Bit 2-0 - SO1 output level (right speaker) (# 0-7)
 static volatile __sfr __at(0xFF24) rNR50;
 #define rAUDVOL rNR50
 
@@ -213,14 +232,14 @@ static volatile __sfr __at(0xFF24) rNR50;
 // AUDTERM/NR51 ($FF25)
 // Selection of Sound output terminal (R/W)
 //
-// Bit 7   - Output sound 4 to SO2 terminal
-// Bit 6   - Output sound 3 to SO2 terminal
-// Bit 5   - Output sound 2 to SO2 terminal
-// Bit 4   - Output sound 1 to SO2 terminal
-// Bit 3   - Output sound 4 to SO1 terminal
-// Bit 2   - Output sound 3 to SO1 terminal
-// Bit 1   - Output sound 2 to SO1 terminal
-// Bit 0   - Output sound 0 to SO1 terminal
+// Bit 7   - Output channel 4 to SO2 terminal (left)
+// Bit 6   - Output channel 3 to SO2 terminal (left)
+// Bit 5   - Output channel 2 to SO2 terminal (left)
+// Bit 4   - Output channel 1 to SO2 terminal (left)
+// Bit 3   - Output channel 4 to SO1 terminal (right)
+// Bit 2   - Output channel 3 to SO1 terminal (right)
+// Bit 1   - Output channel 2 to SO1 terminal (right)
+// Bit 0   - Output channel 1 to SO1 terminal (right)
 static volatile __sfr __at(0xFF25) rNR51;
 #define rAUDTERM rNR51
 
@@ -285,6 +304,13 @@ static volatile __sfr __at(0xFF41) rSTAT;
 #define STAT_LCD 0b00000011 // Both OAM and VRAM used by system
 #define STAT_BUSY 0b00000010 // When set, VRAM access is unsafe
 
+#define STATB_LYC 6
+#define STATB_MODE10 5
+#define STATB_MODE01 4
+#define STATB_MODE00 3
+#define STATB_LYCF 2
+#define STATB_BUSY 1
+
 // SCY ($FF42)
 // Scroll Y (R/W)
 static volatile __sfr __at(0xFF42) rSCY;
@@ -344,6 +370,8 @@ static volatile __sfr __at(0xFF4A) rWY;
 // When WX = 7, the window is displayed from the left edge of the LCD screen.
 // Values of 0-6 and 166 are unreliable due to hardware bugs.
 static volatile __sfr __at(0xFF4B) rWX;
+
+#define WX_OFS 7 // add this to a screen position to get a WX position
 
 
 #if CGB
@@ -444,8 +472,14 @@ static volatile __sfr __at(0xFFFF) rIE;
 #define IE_HILO 0b00010000 // Transition from High to Low of Pin number P10-P13
 #define IE_SERIAL 0b00001000 // Serial I/O transfer end
 #define IE_TIMER 0b00000100 // Timer Overflow
-#define IE_LCDC 0b00000010 // LCDC (see STAT)
+#define IE_STAT 0b00000010 // STAT
 #define IE_VBLANK 0b00000001 // V-Blank
+
+#define IEB_HILO 4
+#define IEB_SERIAL 3
+#define IEB_TIMER 2
+#define IEB_STAT 1
+#define IEB_VBLANK 0
 
 
 /***************************************************************************
@@ -490,5 +524,7 @@ static volatile __sfr __at(0xFFFF) rIE;
 #define ATTR_PALMASK 0b00000111
 #endif
 
+// Deprecated constants. Please avoid using.
+#define IE_LCDC 0b00000010
 
 #endif
