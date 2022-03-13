@@ -3,8 +3,11 @@ include "sdk/hardware.inc"
 SECTION "gbsdk_systeminfo_ram", WRAM0
 _cpu_type::
 wCpuType:: ds 1
+
+IF CGB
 _system_is_gba::
 wSystemIsGba:: ds 1
+ENDC
 
 
 SECTION "Header", ROM0[$100]
@@ -16,8 +19,10 @@ SECTION "Init", ROMX, BANK[1]
 startRom:
     ld   sp, $E000 ; Set stack pointer to the top of WRAM
     ld [wCpuType], a ; Detect system type based on initial register state
+IF CGB
     ld a, b
     ld [wSystemIsGba], a
+ENDC
     call ___globalsInitCode ; init C globals
     call _main
     db   $DD ; lock up if main returns ($DD is an invalid opcode)

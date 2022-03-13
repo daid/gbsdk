@@ -1,5 +1,7 @@
 include "sdk/hardware.inc"
 
+IF SGB
+
 SECTION "gbsdk_sgb_functions", ROM0
 _sgb_send::
     pop  de
@@ -42,3 +44,5 @@ _sgb_send::
     ldh  [rP1], a
 
     ret
+
+ENDC
