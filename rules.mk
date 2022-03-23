@@ -1,5 +1,12 @@
 .PHONY: all clean
 
+# SDCC renamed the `gbz80` arch to `sm83` in 4.2.0
+SDCC_VERSION := $(shell sdcc --version | head -n 1 | awk '{print $$4}')
+ARCH := gbz80
+ifeq ($(SDCC_VERSION), 4.2.0)
+	ARCH := sm83
+endif
+
 MYDIR     := $(dir $(lastword $(MAKEFILE_LIST)))
 
 ifndef PROJECT_NAME
@@ -19,12 +26,12 @@ SRC       := $(shell find src/ -type f -name '*.c') $(shell find $(MYDIR)/src/ -
 ASM       := $(shell find src/ -type f -name '*.asm') $(shell find $(MYDIR)/src/ -type f -name '*.asm')
 
 # Which files do we use from the sdcc libc
-LIBC    := _memset.c gbz80/memcpy.s
+LIBC    := _memset.c $(ARCH)/memcpy.s
 LIBC    += _divuchar.c _divschar.c _muluchar.c _mulschar.c _modschar.c _moduchar.c
 LIBC    += _divuint.c _divsint.c _mulint.c _modsint.c _moduint.c
 # the 32 bit functions use 10% of ROM0, so do not include them
 #LIBC    += _divulong.c _divslong.c _mullong.c _modslong.c _modulong.c
-LIBC_PATH := $(subst \,/,$(shell sdcc -mgbz80 --print-search-dirs | grep gbz80 | tail -n 1))/../src
+LIBC_PATH := $(subst \,/,$(shell sdcc -m$(ARCH) --print-search-dirs | grep $(ARCH) | tail -n 1))/../src
 
 ifneq (1,$(words [$(LIBC_PATH)]))
 $(error "your environment or sdcc is installed in a path with spaces in it, this is not allowed, as it will break sdcc")
@@ -36,7 +43,7 @@ BUILD    := _build
 TOOLS    := $(MYDIR)/tools
 OBJS     := $(patsubst %, $(BUILD)/%.o, $(ASM) $(SRC)) $(patsubst %, $(BUILD)/libc/%.o, $(LIBC)) $(BUILD)/gsinit.end.o
 
-CFLAGS   := -mgbz80 -Isrc/ -I$(MYDIR)/inc --max-allocs-per-node 25000
+CFLAGS   := -m$(ARCH) -Isrc/ -I$(MYDIR)/inc --max-allocs-per-node 25000
 ASFLAGS  := -isrc/ -i$(MYDIR)/inc -i$(BUILD)/assets/ -Wall
 LDFLAGS  := --pad 0xFF --wramx
 FIXFLAGS := --validate --pad-value 0xFF --title "$(PROJECT_NAME)" --mbc-type "$(MBC)" -l 0x33
