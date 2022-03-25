@@ -1,9 +1,9 @@
 .PHONY: all clean
 
 # SDCC renamed the `gbz80` arch to `sm83` in 4.2.0
-SDCC_VERSION := $(shell sdcc --version | head -n 1 | awk '{print $$4}')
 ARCH := gbz80
-ifeq ($(SDCC_VERSION), 4.2.0)
+SDCC_VERSTRING := $(shell sdcc --version)
+ifeq ($(findstring sm83,$(SDCC_VERSTRING)),sm83)
 	ARCH := sm83
 endif
 
