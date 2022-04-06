@@ -33,7 +33,7 @@
 
 #define SGB_HEADER(command, length) ((uint8_t)(((command) << 3) | (length)))
 
-void sgb_send(const uint8_t* packet);
+void sgb_send(const uint8_t* packet) __preserves_regs(b);
 #endif
 
 #endif
