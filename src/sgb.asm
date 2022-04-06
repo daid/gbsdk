@@ -4,17 +4,13 @@ IF SGB
 
 SECTION "gbsdk_sgb_functions", ROM0
 _sgb_send::
-    pop  de
-    pop  hl
-    ; hl=pointer to data to send
-
     ; SGB RESET pulse
     xor  a
     ldh  [rP1], a
-    push hl ; done here for delay reasons
+    ld   h, d ; hl=pointer to data to send
+    ld   l, e ; done here for delay reasons
     cpl
     ldh  [rP1], a
-    push de ; done here for delay reasons
     ld   e, 16 ; amount of bytes to send
 
 .byteLoop:

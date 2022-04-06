@@ -10,86 +10,89 @@ _lcd_off::
     ret
 
 _vram_memcpy::
-    ld   hl, sp + 7
-    ld   a, [hl-]
-    ld   d, a
-    ld   a, [hl-]
-    ld   e, a
-    or   a, d
-    ret  z
-    ; size -> de
+    ; src is in bc, dst is in de, size is on the stack
 
-    push bc
-     ld   a, [hl-]
-     ld   b, a
-     ld   a, [hl-]
-     ld   c, a
-     ld   a, [hl-]
-     ld   l, [hl]
-     ld   h, a
-     ; src -> bc, dst -> hl, size -> de
-     inc  d
-     inc  e
-     jr   .start
+    ld   hl, sp + 2
+    ld   a, [hl+]
+    ld   h, [hl]
+    ld   l, a
+    or   a, h
+    ret  z
+    ; size -> hl
+
+    ld   a, h
+    ld   h, d
+    ld   d, a
+
+    ld   a, l
+    ld   l, e
+    ld   e, a
+    ; swap hl and de, so now:
+    ; src -> bc, dst -> hl, size -> de
+    inc  d
+    inc  e
+    jr   .start
 
 .copy_loop:
-     ldh  a, [rSTAT]
-     and  a, STATF_BUSY
-     jr   nz, .copy_loop
-     ld   a, [bc]
-     ld   [hl+], a
-     inc  bc
+    ldh  a, [rSTAT]
+    and  a, STATF_BUSY
+    jr   nz, .copy_loop
+    ld   a, [bc]
+    ld   [hl+], a
+    inc  bc
 .start:
-     dec  e
-     jr   nz, .copy_loop
-     dec  d
-     jr   nz, .copy_loop
+    dec  e
+    jr   nz, .copy_loop
+    dec  d
+    jr   nz, .copy_loop
 
-    pop bc
     ret
 
 _vram_memset::
-    ld   hl, sp + 6
-    ld   a, [hl-]
-    ld   d, a
-    ld   a, [hl-]
-    ld   e, a
-    or   a, d
+    ; value is in a, dst is in de, size is on the stack
+    ld   c, a
+    ; value -> c
+
+    ld   hl, sp + 2
+    ld   a, [hl+]
+    ld   h, [hl]
+    ld   l, a
+    or   a, h
     ret  z
-    ; size -> de
-    push bc
-     ld   a, [hl-]
-     ld   c, a
-     ld   a, [hl-]
-     ld   l, [hl]
-     ld   h, a
-     ; value -> c, dst -> hl, size -> de
-     inc  d
-     inc  e
-     jr   .start
+    ; size -> hl
+
+    ld   a, h
+    ld   h, d
+    ld   d, a
+
+    ld   a, l
+    ld   l, e
+    ld   e, a
+    ; swap hl and de, so now:
+    ; value -> c, dst -> hl, size -> de
+    inc  d
+    inc  e
+    jr   .start
 
 .copy_loop:
-     ldh  a, [rSTAT]
-     and  a, STATF_BUSY
-     jr   nz, .copy_loop
-     ld   a, c
-     ld   [hl+], a
+    ldh  a, [rSTAT]
+    and  a, STATF_BUSY
+    jr   nz, .copy_loop
+    ld   a, c
+    ld   [hl+], a
 .start:
-     dec  e
-     jr   nz, .copy_loop
-     dec  d
-     jr   nz, .copy_loop
+    dec  e
+    jr   nz, .copy_loop
+    dec  d
+    jr   nz, .copy_loop
 
-    pop bc
     ret
 
 IF CGB
 
 _cgb_background_palette::
-    pop  de
-    pop  hl
-    push hl
-    push de
+    ld   h, d
+    ld   l, e
     ld   a, BCPSF_AUTOINC
     ldh  [rBCPS], a
     ld   e, 8*4*2
@@ -100,10 +103,8 @@ _cgb_background_palette::
     ret
 
 _cgb_object_palette::
-    pop  de
-    pop  hl
-    push hl
-    push de
+    ld   h, d
+    ld   l, e
     ld   a, OCPSF_AUTOINC
     ldh  [rOCPS], a
     ld   e, 8*4*2

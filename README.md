@@ -18,7 +18,7 @@ This project has a few goals:
 
 To use this, you need to have installed:
 
-* sdcc (version 4.1.0)
+* sdcc (version 4.2.0)
 * rgbds (version 0.5.1)
 * python (version 3.6 or newer)
 * A strong will, and a bit of crazy.

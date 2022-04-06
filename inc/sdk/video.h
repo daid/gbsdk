@@ -9,8 +9,8 @@
 void lcd_off(void) __preserves_regs(b, c, d, e, h, l);
 
 //Copy to VRAM with STAT checks, so these function are safe to write to VRAM at any time.
-void vram_memcpy(uint16_t dst, void* src, uint16_t size) __preserves_regs(b, c);
-void vram_memset(uint16_t dst, uint8_t value, uint16_t size) __preserves_regs(b, c);
+void vram_memcpy(uint16_t dst, void* src, uint16_t size);
+void vram_memset(uint16_t dst, uint8_t value, uint16_t size) __preserves_regs(b);
 inline void vram_set(uint16_t dst, uint8_t value) {
     while(rSTAT & STAT_BUSY) {}
     *((uint8_t*)dst) = value;
