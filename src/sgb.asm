@@ -7,10 +7,13 @@ _sgb_send::
     ; SGB RESET pulse
     xor  a
     ldh  [rP1], a
-    ld   h, d ; hl=pointer to data to send
-    ld   l, e ; done here for delay reasons
+    push hl ; for delay only
     cpl
     ldh  [rP1], a
+    pop  hl ; for delay only
+    
+    ld   h, d ; hl=pointer to data to send
+    ld   l, e
     ld   e, 16 ; amount of bytes to send
 
 .byteLoop:
