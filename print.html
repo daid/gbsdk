@@ -223,12 +223,12 @@ And some things are essential to understand. Especially most of the rendering se
 <h2 id="windows"><a class="header" href="#windows">Windows</a></h2>
 <p>Download the latest release package from <a href="https://github.com/daid/gbsdk-winenv/releases">gbsdk-winenv</a> and extract it somewhere.</p>
 <p>Running the <code>gbsdk-bash.exe</code> will give you a commandline shell where you can do builds (all required tools are installed in this)</p>
-<p>Alternatively, install WSL (if you have Windows 10) and follow the linux setup.</p>
+<p>Alternatively, install WSL (if you have Windows 10 or 11) and follow the linux setup.</p>
 <h2 id="linux"><a class="header" href="#linux">Linux</a></h2>
 <p>You'll need to install the following tools, everything can be newer then the specified versions, specified versions are minimal known working versions.</p>
 <ul>
 <li>python 3.6</li>
-<li>sdcc 4.1.0</li>
+<li>sdcc 4.2.0</li>
 <li>rgbds 0.5.1</li>
 </ul>
 <p>Assuming a debian based system, you'll need the following steps:</p>
@@ -236,9 +236,9 @@ And some things are essential to understand. Especially most of the rendering se
 apt-get install python3 build-essential bison libboost-dev libpng-dev
 
 # Get and build sdcc
-wget https://sourceforge.net/projects/sdcc/files/sdcc/4.1.0/sdcc-src-4.1.0.tar.bz2/download -O sdcc-src.tar.bz2
+wget https://sourceforge.net/projects/sdcc/files/sdcc/4.2.0/sdcc-src-4.2.0.tar.bz2/download -O sdcc-src.tar.bz2
 tar -xjvf sdcc-src.tar.bz2
-cd sdcc
+cd sdcc-4.2.0
 ./configure --disable-pic14-port  --disable-pic16-port
 make -j$(nproc)
 sudo make install
