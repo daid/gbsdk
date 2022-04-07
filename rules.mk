@@ -1,10 +1,11 @@
 .PHONY: all clean
 
 # SDCC renamed the `gbz80` arch to `sm83` in 4.2.0
-ARCH := gbz80
+ARCH := sm83
 SDCC_VERSTRING := $(shell sdcc --version)
-ifeq ($(findstring sm83,$(SDCC_VERSTRING)),sm83)
-	ARCH := sm83
+ifeq ($(findstring sm83,$(SDCC_VERSTRING)),)
+$(info $(SDCC_VERSTRING))
+$(error Installed SDCC version is unsupported. Minimum supported version is 4.2.0)
 endif
 
 MYDIR     := $(dir $(lastword $(MAKEFILE_LIST)))
