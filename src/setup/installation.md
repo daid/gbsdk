@@ -19,7 +19,7 @@ Assuming a debian based system, you'll need the following steps:
 
 ```sh
 # Install package from the package manager
-apt-get install python3 build-essential bison libboost-dev libpng-dev
+sudo apt-get install python3 build-essential bison libboost-dev libpng-dev flex texinfo pkg-config
 
 # Get and build sdcc
 wget https://sourceforge.net/projects/sdcc/files/sdcc/4.2.0/sdcc-src-4.2.0.tar.bz2/download -O sdcc-src.tar.bz2
@@ -33,8 +33,7 @@ cd ..
 # Get and build rgbds
 wget https://github.com/gbdev/rgbds/releases/download/v0.5.1/rgbds-0.5.1.tar.gz -O rgbds-src.tar.gz
 tar -xzvf rgbds-src.tar.gz
-cd rgbds-0.5.1
-./configure
+cd rgbds
 make
 sudo make install
 cd ..
