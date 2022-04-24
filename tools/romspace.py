@@ -1,7 +1,7 @@
 import sys
 import re
 
-SIZE = {"ROM0": 0x4000, "ROMX": 0x4000, "WRAM0": 0x2000, "HRAM": 0x007F, "VRAM": 0x4000}
+SIZE = {"ROM0": 0x4000, "ROMX": 0x4000, "WRAM0": 0x2000, "SRAM": 0x2000, "HRAM": 0x007F, "VRAM": 0x4000}
 
 area_re = re.compile(r'([A-Z0-9]+) bank #([0-9a-f]+):\n')
 slack_re = re.compile(r'    SLACK: \$([0-9a-f]+) byte')
